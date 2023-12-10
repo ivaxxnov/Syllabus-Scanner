@@ -1,8 +1,8 @@
 # Syllabus-Scanner
 currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
 
------------------------
-# TODO
+---
+## TODO
 - Build actual website, model it after [course central](https://coursecentral.ca/)
 - pdf text extraction
 	- look into how it gonna be done
@@ -14,8 +14,7 @@ currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
 	- probably add a function to check prompt response for accuracy and potentially terminate the pipeline
 - return files to website for download
 - profit
------------------------
-
+  ---
 
 ## Overview
 
