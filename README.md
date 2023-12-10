@@ -1,7 +1,8 @@
 # Syllabus-Scanner
 currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
 
-## TODO
+## Planning
+**First prototype expected by December 23**
 
 - Build actual website, model it after [course central](https://coursecentral.ca/)
 - pdf text extraction
