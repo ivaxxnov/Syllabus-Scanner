@@ -1,5 +1,21 @@
 # Syllabus-Scanner
 
+-----------------------
+# TODO
+- Build actual website, model it after [course central](https://coursecentral.ca/)
+- pdf text extraction
+	- look into how it gonna be done
+- chatgpt api call and prompt
+	- probably seperate the api call and the prompt building
+- make google sheets document with grade calculator built in
+- export google sheets document with placeholders
+- function to fill in placeholders with prompt response
+	- probably add a function to check prompt response for accuracy and potentially terminate the pipeline
+- return files to website for download
+- profit
+-----------------------
+
+
 ## Overview
 
 Syllabus-Scanner is a site designed to simplify the process of creating a schedule for the school semester. The site uses AI scanning of PDF files, to interpret and extract key details such as course and assignment names, as well as due dates. The extracted information is then compiled into a nicely formatted spreadsheet, sorted in order of due date, with colour coding for easy readability. The spreadsheet file is returned to the user and can be used with common spreadsheet applications such as Google Sheets or Microsoft Excel.
