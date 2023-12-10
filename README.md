@@ -1,4 +1,5 @@
 # Syllabus-Scanner
+currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
 
 -----------------------
 # TODO
