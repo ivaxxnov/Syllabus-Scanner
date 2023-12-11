@@ -1,8 +1,6 @@
 # Syllabus-Scanner
 currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
 
-project assignment at: https://docs.google.com/spreadsheets/d/1IZUJuQJgYpsOVsoRa1yOhfZU2xXdqSUiee9A3hNauOM/edit#gid=0
-
 ## Planning
 
 **First prototype expected by December 23**
