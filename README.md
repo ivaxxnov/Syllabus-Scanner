@@ -1,18 +1,20 @@
 # Syllabus-Scanner
 currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
+project assignment at: https://docs.google.com/spreadsheets/d/1IZUJuQJgYpsOVsoRa1yOhfZU2xXdqSUiee9A3hNauOM/edit#gid=0
 
 ## Planning
+
 **First prototype expected by December 23**
 
 - Build actual website, model it after [course central](https://coursecentral.ca/)
-- pdf text extraction
-	- look into how it gonna be done
+- PDF text extraction
+  - look into how it gonna be done
 - chatgpt api call and prompt
-	- probably seperate the api call and the prompt building
-- make google sheets document with grade calculator built in
+  - probably seperate the api call and the prompt building
+- make google sheets document with weighted final grade calculator built in
 - export google sheets document with placeholders
 - function to fill in placeholders with prompt response
-	- probably add a function to check prompt response for accuracy and potentially terminate the pipeline
+  - probably add a function to check prompt response for accuracy and potentially terminate the pipeline
 - return files to website for download
 - profit
 
