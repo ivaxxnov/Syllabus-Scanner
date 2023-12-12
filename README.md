@@ -1,9 +1,8 @@
 # Syllabus-Scanner
 currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
+**First prototype expected by December 23**
 
 ## Planning
-
-**First prototype expected by December 23**
 
 - Build actual website, model it after [course central](https://coursecentral.ca/)
 - PDF text extraction
