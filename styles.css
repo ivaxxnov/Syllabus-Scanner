@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
+		flex-direction: column;
     align-items: center;
     height: 100vh;
 }
@@ -24,9 +24,17 @@ body {
     font-family: sans-serif;
 }
 
+.main {
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
 .container {
     background-color: #1a202c;
     padding: 20px;
+		height: 50%;
+		width: 50%;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
