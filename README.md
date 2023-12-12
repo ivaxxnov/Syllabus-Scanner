@@ -1,5 +1,5 @@
 # Syllabus-Scanner
-currently hosted at: https://kianbahasadri.github.io/Syllabus-Scanner/
+currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
 
 ## Planning
 
