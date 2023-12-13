@@ -21,6 +21,7 @@ Dear Engineers: Please for goodness sake dont be afraid to use chatgpt if you ne
 4. check gpt response
 5. insert values from response into grade calc spreadsheet file
 6. insert values from resposne into calender file
+7. return files
 
 
 ## Overview
