@@ -3,6 +3,7 @@ currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
 **First prototype expected by December 23**
 
 ## Planning
+Dear Engineers: Please for goodness sake dont be afraid to use chatgpt if you need it. This isn't homework, it's not cheating.
 
 #### User Interface Step-Through:
 1. Interface clearly displays file upload section
