@@ -20,13 +20,13 @@ Dear Engineers: Please for goodness sake dont be afraid to use chatgpt if you ne
 3. query gpt with prompt
 4. check gpt response
 5. insert values from response into grade calc spreadsheet file
-6. insert values from resposne into calender file
+6. insert values from response into calendar file
 7. return files
 
 
 ## Overview
 
-Syllabus-Scanner is a site designed to simplify the process of creating a schedule for the school semester. The site uses chatGPT to scan your Syllabus files and extracts key details such as course and assignment names, due dates, and quiz dates. The extracted information is then compiled into a nicely formatted spreadsheet, sorted in order of due date, with colour coding for easy readability. The spreadsheet file is returned to the user along with an importable calender file.
+Syllabus-Scanner is a site designed to simplify the process of creating a schedule for the school semester. The site uses chatGPT to scan your Syllabus files and extracts key details such as course name, assignments, due dates, and quiz dates. The extracted information is then compiled into two files. A nicely formatted spreadsheet, sorted in order of due date, with colour coding for easy readability, as well as a calendar file which is able to be imported into any major calendar application (Google, Microsoft, Apple) for easy tracking. The files are then returned to the user for download.
 
 ## How It Works
 
@@ -34,4 +34,4 @@ Syllabus-Scanner is a site designed to simplify the process of creating a schedu
 
 2. **Processing**: Syllabus-Scanner sends the uploaded files through a processing pipeline for scanning and formatting.
 
-3. **Spreadsheet Output**: The processed data is then compiled into downloadable files and returned to the user.
+3. **Output**: The processed data is then compiled into downloadable files and returned to the user.
