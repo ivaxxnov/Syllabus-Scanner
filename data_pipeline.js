@@ -78,8 +78,21 @@ function checkResponse(resposne) {
 
 /*
 build spreadsheet file with response
+PLEASE NOTE, the spreadsheet will be created by another team, it is up to the one responsible
+for this function to export that spreadsheet and save it in this file, and then put the assignments and due dates in their respective spots.
 -- parameters: response
 -- return: file (as object)
 */
 function buildSpreadsheet(response) {
+}
+
+
+/*
+build calender importable file with response
+PLEASE NOTE, the filetype can be whatever you want, its up to you to do your research and choose
+a filetype thats both easy to work with using string manipulation and (mostly) universally importable.
+-- parameters: response
+-- return: file (as object)
+*/
+function buildCalender(response) {
 }
