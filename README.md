@@ -5,16 +5,24 @@ currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
 ## Planning
 
 - Build actual website, model it after [course central](https://coursecentral.ca/)
-- PDF text extraction
-  - look into how it gonna be done
-- chatgpt api call and prompt
-  - probably seperate the api call and the prompt building
-- make google sheets document with weighted final grade calculator built in
-- export google sheets document with placeholders
-- function to fill in placeholders with prompt response
-  - probably add a function to check prompt response for accuracy and potentially terminate the pipeline
-- return files to website for download
-- profit
+
+#### User Interface Step-Through:
+1. Interface clearly displays file upload section
+2. User uploads files and starts process with button
+3. Calls pipeline and gives it files
+4. While waiting for response from pipeline, displays a progress bar
+5. Pipeline returns the files
+7. interface clearly presents files for download
+
+#### Pipeline Step-Through:
+- Single handler function called "pipeline()" will handle all subsequent functions 
+1. PDF text extraction
+2. Build prompt using extracted text
+3. query gpt with prompt
+4. check gpt response
+5. insert values from response into grade calc spreadsheet file
+6. insert values from resposne into calender file
+
 
 ## Overview
 
