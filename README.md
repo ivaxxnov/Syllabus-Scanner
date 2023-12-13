@@ -4,8 +4,6 @@ currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
 
 ## Planning
 
-- Build actual website, model it after [course central](https://coursecentral.ca/)
-
 #### User Interface Step-Through:
 1. Interface clearly displays file upload section
 2. User uploads files and starts process with button
