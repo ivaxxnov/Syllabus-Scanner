@@ -8,7 +8,7 @@ handles the other functions for the pipeline and fits them all together
 -- parameters: file as object
 -- return: spreadsheet and calender as downloadable files
 */
-function handler(file) {
+function pipeline(file) {
 }
 
 
