@@ -68,11 +68,20 @@ function queryGPT(prompt) {
 
 
 /*
-check response to see if its dookie
+check response to see if chatgpt spit out garbage or not.
+The response format will probably be json but its subject to change
 -- parameters: response
 -- return: boolena
 */
 function checkResponse(resposne) {
+}
+
+/*
+parse response to JSON, ASSUME RESPONSE HAS BEEN CHECKED FOR ERRORS
+-- parameters: response
+-- return: boolena
+*/
+function parseResponseToJSON(resposne) {
 }
 
 
