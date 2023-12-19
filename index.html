@@ -5,8 +5,13 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">
     <style>
+        /*Creating a color variable*/
+        :root {
+            --midnight-blue: #07071c;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -14,24 +19,24 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #07071c; /* Set the background color for the entire page */
-            color: #ffffff; /* Set text color to white */
+            background-color: var(--midnight-blue); /*Using the custom color*/
+            color: #ffffff; /*Set text color to white*/
         }
 
         .header {
             text-align: center;
-            background-color: #07071c;
+            background-color: var(--midnight-blue);
         }
-/*I should probably make a variable to store the color at this point lmfao*/
+
         .container {
             text-align: center;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            background-color: #07071c;
-            color: #ffffff; /* Set text color to white */
+            background-color: var(--midnight-blue);
+            color: #ffffff; /*Set text color to white*/
             max-width: 300px;
-            margin-top: 20px; /* Add margin to the top of the container */
+            margin-top: 20px; /*Add margin to the top of the container*/
         }
     </style>
     <title>Syllabus Scanner</title>
