@@ -17,7 +17,23 @@ detects the filetype and uses the correct function to extract the text from it
 -- parameters: file as object
 -- return: string
 */
-function stringFromSyllabusFile(file) {
+function stringFromSyllabusFile(file) { 
+    let fileExtension = file.name.split('.').pop().toLowerCase();
+    //Extracts the file type by spliting and popping at the '.'
+
+    if (fileExtension === 'pdf') {
+        return stringFromPDF(file);
+    } else if (fileExtension === 'txt') {
+        return stringFromTXT(file);
+    } else if (fileExtension === 'docx') {
+        return stringFromDOCX(file);
+    } else {
+        console.log("Unsupported file type, please use PDF, TXT, or DOCX:", fileExtension);
+        return null;
+  //Pretty basic conditonals, calliing the specific functions depending on the type
+  //Sends a error if a unsupported type is passed.    
+
+    }
 }
 
 
