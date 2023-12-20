@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- These are scripts for the excel viewer -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- stylesheet -->
     <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">
     <style>
         /*Creating a color variable*/
@@ -17,8 +20,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            min-height:150vh;
             background-color: var(--midnight-blue); /*Using the custom color*/
             color: #ffffff; /*Set text color to white*/
         }
@@ -33,10 +37,38 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 8px;
+            height:auto;
             background-color: var(--midnight-blue);
             color: #ffffff; /*Set text color to white*/
             max-width: 300px;
             margin-top: 20px; /*Add margin to the top of the container*/
+        }
+
+        #excel-container {
+            width: 90%; /* Adjust the width as needed, for now 90% of the parent container */
+            height: auto;
+            max-width: 1000px; /*Set a maximum width to avoid excessive stretching*/
+            overflow: auto; 
+            border: 1px solid #ccc;
+            margin-top: auto;/*This makes it so the table container has enough space to pop up and display a file. it fucks up visually if you zoom out of the page with your browser*/
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        #fileInput, button, #downloadButton, #addRowButton, #addColumnButton {
+            margin-top: 10px;
         }
     </style>
     <title>Syllabus Scanner</title>
@@ -57,6 +89,94 @@
     </div>
 
     <script src="assets/script.js"></script>
+
+
+
+    <input type="file" id="fileInput" accept=".xlsx" />
+    <button onclick="handleFile()">Load Excel File</button>
+
+    <div id="excel-container"></div>
+    
+    <button id="downloadButton" onclick="downloadFile()">Download Edited Excel</button>
+    <button id="addRowButton" onclick="addRow()">Add Row</button>
+    <button id="addColumnButton" onclick="addColumn()">Add Column</button>
+
+    <script>
+        var originalSheet;
+
+        function handleFile() {
+            var fileInput = document.getElementById('fileInput');
+            var excelContainer = document.getElementById('excel-container');
+
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, { type: 'array' });
+
+                var sheetName = workbook.SheetNames[0];
+                var sheet = workbook.Sheets[sheetName];
+
+                originalSheet = sheet;
+                var html = XLSX.utils.sheet_to_html(sheet, { editable: true });
+
+                excelContainer.innerHTML = html;
+                initializeEmptyCells();
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+        /*Download doesnt work :( the alert does though!*/
+        function downloadFile() {
+            if (originalSheet) {
+                var editedWorkbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(editedWorkbook, XLSX.utils.table_to_sheet(document.getElementById('excel-container')));
+
+                var blob = XLSX.write(editedWorkbook, { bookType: 'xlsx', bookSST: false, type: 'blob' });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'edited_file.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert('Please load an Excel file first.');
+            }
+        }
+
+        function addRow() {
+            var table = document.querySelector('#excel-container table');
+            var newRow = table.insertRow(-1); // -1 inserts the row at the end
+
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                var newCell = newRow.insertCell(i);
+                newCell.innerHTML = '0'; // Initialize with '0'
+            }
+        }
+
+        function addColumn() {
+            var table = document.querySelector('#excel-container table');
+
+            for (var i = 0; i < table.rows.length; i++) {
+                var newRowCell = table.rows[i].insertCell(-1); // -1 inserts the cell at the end
+                newRowCell.innerHTML = '0'; // Initialize with '0'
+            }
+        }
+
+        function initializeEmptyCells() {
+            var table = document.querySelector('#excel-container table');
+
+            for (var i = 0; i < table.rows.length; i++) {
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    if (table.rows[i].cells[j].innerHTML === '') {
+                        table.rows[i].cells[j].innerHTML = '0'; // Initialize with '0'
+                    }
+                }
+            }
+        }
+    </script>
 
 </body>
 
