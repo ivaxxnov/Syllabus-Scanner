@@ -43,6 +43,42 @@ extract text from pdf
 -- return: string
 */
 function stringFromPDF(PDFfile) {
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.onload = function () {
+            let typedArray = new Uint8Array(this.result);
+
+            // Initialize PDF.js
+            pdfjsLib.getDocument({ data: typedArray }).promise.then(function (pdfDoc) {
+                // Initialize a variable to store the text content
+                let pdfText = '';
+
+                // Loop through each page of the PDF
+                let promises = [];
+                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                    promises.push(pdfDoc.getPage(pageNum).then(function (page) {
+                        // Extract text content from the page
+                        return page.getTextContent();
+                    }).then(function (textContent) {
+                        // Concatenate the text content to the variable
+                        pdfText += textContent.items.map(function (item) {
+                            return item.str;
+                        }).join(' ');
+                    }));
+                }
+
+                // Wait for all promises to resolve
+                Promise.all(promises).then(function () {
+                    resolve(pdfText);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        };
+        // Read the contents of the PDF file
+        reader.readAsArrayBuffer(PDFfile);
+    });
 }
 
 
@@ -52,6 +88,21 @@ extract text from .txt
 -- return: string
 */
 function stringFromTXT(TXTfile) {
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.onload = function () {
+            let text = this.result;
+            resolve(text);
+        };
+
+        reader.onerror = function () {
+            reject(new Error('Error reading the TXT file.'));
+        };
+
+        // Read the contents of the TXT file
+        reader.readAsText(TXTfile);
+    });
 }
 
 
@@ -62,6 +113,30 @@ extract text from .docx
 NOTE: DONT IMPLEMENT THIS UNTIL WE ARE SURE THAT WE NEED IT
 */
 function stringFromDOCX(DOCXfile) {
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.onload = function () {
+            let arrayBuffer = this.result;
+
+            // Using mammoth.js to convert DOCX to plain text
+            mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+                .then(result => {
+                    let text = result.value || '';
+                    resolve(text);
+                })
+                .catch(error => {
+                    reject(new Error('Error reading the DOCX file.'));
+                });
+        };
+
+        reader.onerror = function () {
+            reject(new Error('Error reading the DOCX file.'));
+        };
+
+        // Read the contents of the DOCX file
+        reader.readAsArrayBuffer(DOCXfile);
+    });
 }
 
 

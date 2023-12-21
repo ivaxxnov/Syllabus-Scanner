@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/styles.css">
+	<!-- Include PDF.js library (PDF reading)-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+	<!-- Include mammoth.js library (DOCX reading)-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+	<!-- Include pipeline functions -->
+	<script src="data_pipeline.js"></script>
     <title>Syllabus Scanner</title>
 </head>
 <body>
@@ -20,9 +26,9 @@
 	</div>
 
 	<div class="container">
-			<p>Select a PDF file:</p>
-			<input type="file" id="pdfInput" accept=".pdf">
-			<p>Click the button to download it:</p>
+			<p>Select a PDF, TXT, or DOCX file:</p>
+			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
+			<p>Click the button to download it (PDF ONLY):</p>
 			<button onclick="downloadPdf()">Download PDF</button>
 	</div>
 </div>
