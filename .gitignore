@@ -1,1 +1,4 @@
 *.swp
+.idea
+api_key.txt
+example_syllabus

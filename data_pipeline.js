@@ -139,42 +139,26 @@ function stringFromDOCX(DOCXfile) {
     });
 }
 
-
 /*
-build prompt to send to chatgdp
--- parameters: pdf in string format
--- return: prompt ready to send
-*/
-function buildPrompt(pdf) {
-}
-
-
-/*
-send prompt to chatgdp and return response
+The actual API call and prompting is done in another file (in another branch currently).
+Assume that you are able to get a response object (as seen in the example) with the data.
+If the response object is bad (use checkResponse) then re-prompt gpt.
+do not get stuck in an infinite loop--if gpt is giving us garbage a couple times then terminate.
 -- parameters: prompt
--- return: chatgdp response
+-- return: chatgdp response as an object (will probably be a promise)
 */
 function queryGPT(prompt) {
 }
 
 
 /*
-check response to see if chatgpt spit out garbage or not.
-The response format will probably be json but its subject to change
+check response to see if chatgpt spit out garbage or not
+(if it has all the fields it should have, and fields like date/time are formatted correctly)
 -- parameters: response
 -- return: boolena
 */
-function checkResponse(resposne) {
+function checkResponse(response) {
 }
-
-/*
-parse response to JSON, ASSUME RESPONSE HAS BEEN CHECKED FOR ERRORS
--- parameters: response
--- return: boolena
-*/
-function parseResponseToJSON(resposne) {
-}
-
 
 /*
 build spreadsheet file with response
