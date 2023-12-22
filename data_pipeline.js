@@ -158,7 +158,56 @@ check response to see if chatgpt spit out garbage or not
 -- return: boolena
 */
 function checkResponse(response) {
+    // Check for the presence of key fields
+    if (!response.subject || !Array.isArray(response.schedule) || !response.marking_weights) {
+        console.log("Response is missing one or more key fields.");
+        return false;
+        // key information like subject, schedule etc are checked.
+    }
+
+    // Check each schedule item for correct structure and valid date/time
+    for (const item of response.schedule) {
+
+        const date = new Date(item.due_date);
+        // used built in techniques to set the date
+
+        const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        // used regex similar to what we learnedin class to determine valid dates
+
+        if (!item.title || isNaN(date.getTime()) || item.due_date !== date.toISOString().split('T')[0] || !timeRegex.test(item.time)) {
+            console.log("Invalid schedule item:", item);
+            // if the date or time associated with a specifc assignment/project/task is invalid, false in returned
+            return false;
+        }
+    }
+
+    // Check marking weights: Ensure all values are numbers and their sum equals 100
+    let totalWeight = 0;
+
+    for (const key in response.marking_weights) {
+
+        const weight = response.marking_weights[key];
+
+        if (typeof weight !== 'number' || weight < 0) {
+            console.log(`Invalid weight for ${key}:`, weight);
+            return false;
+        }
+
+        totalWeight += weight;
+        // used a for loop to check the weight of each task and make sure its between 0 and 100 then added it to the total
+    }
+
+    if (totalWeight !== 100) {
+        console.log("Total weights do not add up to 100:", totalWeight);
+        // if total is not 100, we know something went wrong because each class only has 100% to distribute
+
+        return false;
+    }
+
+    return true;
+    // if everything is good, true is returned.
 }
+
 
 /*
 build spreadsheet file with response
