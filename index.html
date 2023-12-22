@@ -43,6 +43,67 @@
             max-width: 300px;
             margin-top: 20px; /*Add margin to the top of the container*/
         }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            height:auto;
+            background-color: var(--midnight-blue);
+            color: #ffffff; /*Set text color to white*/
+            width: 300px;
+            margin-top: 20px; /*Add margin to the top of the container*/
+            margin-right: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px; /* Add margin between file items */
+        }
+
+        .file-name {
+            flex: 1;
+        }
+
+        .file-item button {
+            margin-left: 8px; /* Add space between file name and 'x' button */
+        }
+
+        @media screen and (max-width: 1200px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                margin-top: 20px;
+                text-align: center;
+            }
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+            .file-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px; /* Add margin between file items */
+            }
+
+            .file-name {
+                flex: 1;
+            }
+
+            .file-item button {
+                margin-left: 8px; /* Add space between file name and 'x' button */
+            }
+        }
+
 
         #excel-container {
             width: 90%; /* Adjust the width as needed, for now 90% of the parent container */
@@ -83,9 +144,58 @@
 
     <div class="container">
         <p>Select a PDF file:</p>
-        <input type="file" id="pdfInput" accept=".pdf">
+        <input type="file" id="pdfInput" multiple size="3" accept=".pdf">
+        <button id="upload-btn">Upload PDF</button>
         <p>Click the button to download it:</p>
         <button onclick="downloadPdf()">Download PDF</button>
+    </div>
+
+    <div class="sidebar">
+        <p>Uploaded Files:</p>
+        <ul id="file-list"></ul>
+
+        <script>
+            function getShortenedFileName(fullName) {
+                const maxLength = 20; // Set the maximum length for the displayed name
+                if (fullName.length <= maxLength) {
+                    return fullName;
+                }
+                const extension = fullName.split('.').pop();
+                const truncatedName = fullName.substring(0, maxLength - 3);
+                return truncatedName + '...' + extension;
+            }
+
+            document.getElementById('upload-btn').addEventListener('click', function() {
+            const fileList = document.getElementById('file-list');
+            const input = document.getElementById('pdfInput');
+
+            Array.from(input.files).forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.className = 'file-item';
+
+                const fileName = document.createElement('span');
+                const shortenedName = getShortenedFileName(file.name);
+                fileName.textContent = shortenedName;
+                fileName.title = file.name;
+                fileName.classList.add('file-name');
+                fileName.addEventListener('click', function() {
+                    // add functionality for click from here
+                    // maybe it uploads and converts to excel? idk
+                });
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'x';
+                removeButton.addEventListener('click', function() {
+                    listItem.remove();
+                });
+
+                listItem.appendChild(fileName);
+                listItem.appendChild(removeButton);
+                fileList.appendChild(listItem);
+            });
+            input.value = '';
+            });
+        </script>
     </div>
 
     <script src="assets/script.js"></script>
