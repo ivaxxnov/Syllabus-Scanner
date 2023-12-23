@@ -1,5 +1,5 @@
 *.swp
-.idea
+*.idea
 api_key.txt
 api.key
 example_syllabus

@@ -142,6 +142,13 @@ function stringFromDOCX(DOCXfile) {
         reader.onload = function () {
             let arrayBuffer = this.result;
 
+/*
+check response to see if chatgpt spit out garbage or not.
+The response format will probably be json but its subject to change
+-- parameters: response
+-- return: boolena
+*/
+function checkResponse(resposne) {
             // Using mammoth.js to convert DOCX to plain text
             mammoth.extractRawText({ arrayBuffer: arrayBuffer })
                 .then(result => {
