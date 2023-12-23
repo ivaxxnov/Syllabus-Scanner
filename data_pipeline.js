@@ -147,7 +147,30 @@ do not get stuck in an infinite loop--if gpt is giving us garbage a couple times
 -- parameters: prompt
 -- return: chatgdp response as an object (will probably be a promise)
 */
-function queryGPT(prompt) {
+async function queryGPT(prompt) {
+    const maxRetries = 3;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        // went with 3 tries, seemed like a good number of tries, can be changed easily
+        
+        try {
+            const response = await sendPromptToGPT(prompt); 
+            // this needs to be replaced with the actual api call function
+            
+            if (checkResponse(response)) {
+                return response; 
+                // returning what chatgpt responsed with once its checked to see if its good
+            }
+            console.log(`Attempt ${attempt}: Invalid response from gpt, retrying...`);
+            
+        } catch (error) {
+            console.error("GPT query failed:", error);
+            // a pretty simple error is thrown if the sendPromptToGPT or anything above doesn't work
+        }
+    }
+
+    throw new Error("Failed to get a valid response from chatGPT after several attempts.");
+    // i don't think this is necessary but, throws a final error if overall goal isn't reached.
 }
 
 
@@ -228,4 +251,25 @@ a filetype thats both easy to work with using string manipulation and (mostly) u
 -- return: file (as object)
 */
 function buildCalender(response) {
+    let icsFileContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Your Organization//Your Product//EN\n";
+
+    response.schedule.forEach(event => {
+        const startDate = event.due_date.replace(/-/g, '') + 'T' + event.time.replace(/:/g, '') + '00';
+        const endDate = startDate; // Simple example: using the same start and end date
+
+        icsFileContent += "BEGIN:VEVENT\n";
+        icsFileContent += `DTSTART:${startDate}\n`;
+        icsFileContent += `DTEND:${endDate}\n`;
+        icsFileContent += `SUMMARY:${event.title}\n`;
+        icsFileContent += "END:VEVENT\n";
+    });
+
+    icsFileContent += "END:VCALENDAR";
+
+    // return only the iCalendar file content as a string
+    return icsFileContent;
+    /* outputs the ics 'code' for the chatgpt prompt, which you take put it in a text file
+    then change the text file into a ics file and you should see the events with their title and time in the
+    correct date depending on the response from chat gpt. /*
+
 }
