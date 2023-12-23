@@ -5,13 +5,6 @@ currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/
 ## Planning
 Dear Engineers: Please for goodness sake dont be afraid to use chatgpt if you need it. This isn't homework, it's not cheating.
 
-#### Text Parsing Step-Through:
-1. build prompt 1
-  a. add fields for api request like temperature, frequency penalty, etc.
-2. process response 1
-3. build prompt 2
-4. get response for prompt 2 and return function
-
 #### User Interface Step-Through:
 1. Interface clearly displays file upload section
 2. User uploads files and starts process with button
