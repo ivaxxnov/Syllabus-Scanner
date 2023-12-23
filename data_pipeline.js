@@ -9,6 +9,29 @@ handles the other functions for the pipeline and fits them all together
 -- return: spreadsheet and calender as downloadable files
 */
 function pipeline(file) {
+	//leave console outputs, its very useful for debugging and doesnt bother the user
+	// its acceptable in a student project such as this one
+
+	console.log("PIPELINE START - pipeline called with file:", file);
+
+	console.log("1 - calling stringFromSyllabusFile()");
+	let string = stringFromSyllabusFile(file);
+	console.log("1.5 - stringFromSyllabusFile() returned:", string);
+
+	console.log("2 - calling queryGPT() with string:", string);
+	let JSONData = queryGPT(string);	// please note the response is checked within the function
+	console.log("2.5 - queryGPT() returned:", JSONData);
+
+	console.log("3 - calling buildSpreadsheet() with JSON:", JSONData);
+	let spreadsheet = buildSpreadsheet(JSONData);
+	console.log("3.5 - buildSpreadsheet() returned:", spreadsheet);
+
+	console.log("4 - calling buildCalender() with JSON:", JSONData);
+	let calender = buildCalender(JSONData);
+	console.log("4.5 - buildCalender() returned:", calender);
+
+	console.log("PIPELINE END - pipeline returning:", [spreadsheet, calender);
+	return [spreadsheet, calender];
 }
 
 
@@ -240,6 +263,20 @@ for this function to export that spreadsheet and save it in this file, and then 
 -- return: file (as object)
 */
 function buildSpreadsheet(response) {
+	let sheetRaw = XLSX.readFile("./template.xlsx");
+	let sheetJSON = XLSX.utils.sheet_to_json(sheetRAW);
+	console.log(sheetJSON);
+
+	// TODO
+	// INSERT RESPONSE INTO SHEETJSON
+	// unfortunately still figuring out how to do proper mark weightings
+	// TODO
+	
+	let newSheet = XLSX.utils.book_new();
+	sheetRaw = XLSX.utils.json_to_sheet(sheetJSON);
+	let preparedFile = XLSX.utils.book_append_sheet(newSheet, "Syllabus-Scanner.xlsx");
+
+	return preparedFile;	
 }
 
 
@@ -270,6 +307,6 @@ function buildCalender(response) {
     return icsFileContent;
     /* outputs the ics 'code' for the chatgpt prompt, which you take put it in a text file
     then change the text file into a ics file and you should see the events with their title and time in the
-    correct date depending on the response from chat gpt. /*
+    correct date depending on the response from chat gpt. */
 
 }
