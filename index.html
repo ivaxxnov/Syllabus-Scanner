@@ -4,14 +4,22 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- These are scripts for the excel viewer -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    <!-- stylesheet -->
-    <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">
+    <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">  
     <title>Syllabus Scanner</title>
+  
+	<!-- EXTERNAL JS IMPORTS -->
+		<!-- PDF.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+		<!-- mammoth.js (DOCX reading)-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+		<!-- Sheet.js version 0.20.1 -->
+		<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- JQuery, wtf i didnt even know we were using jquery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
+	<!-- LOCAL JS IMPORTS -->
+		<!-- Include pipeline functions -->
+		<script src="data_pipeline.js"></script>
 </head>
 
 <body>
@@ -90,6 +98,15 @@
     <button id="addRowButton" onclick="addRow()">Add Row</button>
     <button id="addColumnButton" onclick="addColumn()">Add Column</button>
 
+	<div class="container">
+			<p>Select a PDF, TXT, or DOCX file:</p>
+			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
+			<p>Click the button to download it (PDF ONLY):</p>
+			<button onclick="downloadPdf()">Download PDF</button>
+	</div>
+</div>
+  
+  
     <script>
         var originalSheet;
 
