@@ -1,36 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">  
     <title>Syllabus Scanner</title>
-
-	<!-- EXTERNAL IMPORTS -->
+  
+	<!-- EXTERNAL JS IMPORTS -->
 		<!-- PDF.js -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
 		<!-- mammoth.js (DOCX reading)-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 		<!-- Sheet.js version 0.20.1 -->
 		<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- JQuery, wtf i didnt even know we were using jquery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-	<!-- LOCAL IMPORTS -->
+	<!-- LOCAL JS IMPORTS -->
 		<!-- Include pipeline functions -->
 		<script src="data_pipeline.js"></script>
-
 </head>
+
 <body>
 
-<div class="header">
-    <h1>Syllabus Scanner</h1>
-		<h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
-</div>
+    <div class="header">
+        <h1>Syllabus Scanner</h1>
+        <h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
+    </div>
 
-<div class="main">
-	<div class="container">
-	<h3> Our service is cool and simple!!!</h3>
-	<img src="assets/showcase.png" id="showcase">
-	</div>
+    <div class="container">
+        <p>Select a PDF file:</p>
+        <input type="file" id="pdfInput" multiple size="3" accept=".pdf">
+        <button id="upload-btn">Upload PDF</button>
+        <p>Click the button to download it:</p>
+        <button onclick="downloadPdf()">Download PDF</button>
+    </div>
+
+    <div class="sidebar">
+        <p>Uploaded Files:</p>
+        <ul id="file-list"></ul>
+
+        <script>
+            function getShortenedFileName(fullName) {
+                const maxLength = 20; // Set the maximum length for the displayed name
+                if (fullName.length <= maxLength) {
+                    return fullName;
+                }
+                const extension = fullName.split('.').pop();
+                const truncatedName = fullName.substring(0, maxLength - 3);
+                return truncatedName + '...' + extension;
+            }
+
+            document.getElementById('upload-btn').addEventListener('click', function() {
+            const fileList = document.getElementById('file-list');
+            const input = document.getElementById('pdfInput');
+
+            Array.from(input.files).forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.className = 'file-item';
+
+                const fileName = document.createElement('span');
+                const shortenedName = getShortenedFileName(file.name);
+                fileName.textContent = shortenedName;
+                fileName.title = file.name;
+                fileName.classList.add('file-name');
+                fileName.addEventListener('click', function() {
+                    // add functionality for click from here
+                    // maybe it uploads and converts to excel? idk
+                });
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'x';
+                removeButton.addEventListener('click', function() {
+                    listItem.remove();
+                });
+
+                listItem.appendChild(fileName);
+                listItem.appendChild(removeButton);
+                fileList.appendChild(listItem);
+            });
+            input.value = '';
+            });
+        </script>
+    </div>
+
+    <script src="assets/script.js"></script>
+
+
+
+    <input type="file" id="fileInput" accept=".xlsx" />
+    <button onclick="handleFile()">Load Excel File</button>
+
+    <div id="excel-container"></div>
+    
+    <button id="downloadButton" onclick="downloadFile()">Download Edited Excel</button>
+    <button id="addRowButton" onclick="addRow()">Add Row</button>
+    <button id="addColumnButton" onclick="addColumn()">Add Column</button>
 
 	<div class="container">
 			<p>Select a PDF, TXT, or DOCX file:</p>
@@ -39,8 +105,85 @@
 			<button onclick="downloadPdf()">Download PDF</button>
 	</div>
 </div>
+  
+  
+    <script>
+        var originalSheet;
 
-<script src="assets/script.js"></script>
+        function handleFile() {
+            var fileInput = document.getElementById('fileInput');
+            var excelContainer = document.getElementById('excel-container');
+
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, { type: 'array' });
+
+                var sheetName = workbook.SheetNames[0];
+                var sheet = workbook.Sheets[sheetName];
+
+                originalSheet = sheet;
+                var html = XLSX.utils.sheet_to_html(sheet, { editable: true });
+
+                excelContainer.innerHTML = html;
+                initializeEmptyCells();
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+        /*Download doesnt work :( the alert does though!*/
+        function downloadFile() {
+            if (originalSheet) {
+                var editedWorkbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(editedWorkbook, XLSX.utils.table_to_sheet(document.getElementById('excel-container')));
+
+                var blob = XLSX.write(editedWorkbook, { bookType: 'xlsx', bookSST: false, type: 'blob' });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'edited_file.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert('Please load an Excel file first.');
+            }
+        }
+
+        function addRow() {
+            var table = document.querySelector('#excel-container table');
+            var newRow = table.insertRow(-1); // -1 inserts the row at the end
+
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                var newCell = newRow.insertCell(i);
+                newCell.innerHTML = '0'; // Initialize with '0'
+            }
+        }
+
+        function addColumn() {
+            var table = document.querySelector('#excel-container table');
+
+            for (var i = 0; i < table.rows.length; i++) {
+                var newRowCell = table.rows[i].insertCell(-1); // -1 inserts the cell at the end
+                newRowCell.innerHTML = '0'; // Initialize with '0'
+            }
+        }
+
+        function initializeEmptyCells() {
+            var table = document.querySelector('#excel-container table');
+
+            for (var i = 0; i < table.rows.length; i++) {
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    if (table.rows[i].cells[j].innerHTML === '') {
+                        table.rows[i].cells[j].innerHTML = '0'; // Initialize with '0'
+                    }
+                }
+            }
+        }
+    </script>
 
 </body>
+
 </html>
