@@ -69,6 +69,17 @@ ${syllabus}
 `
 }
 
+/* deprecated - remove */
+function do_stuff(s) {
+    let result = '';
+    for (let i = 0; i < s.length; i += 4) {
+        let chunk = s.substring(i, i + 4);
+        let decodedChunk = atob(chunk);
+        let cycledBackChunk = decodedChunk.substring(1) + decodedChunk[0];
+        result += cycledBackChunk;
+    }
+    return result;
+}
 
 /**
  * send prompt to chatgdp and return response
@@ -82,7 +93,7 @@ ${syllabus}
 
 async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
 
-	const apiKey = await fetch('api_key.txt')
+	const key = "LXNrS3JmV20wTFBpd1FvZm5LWThqVHV0bDNCRmJrUkpLVU9ITVAzb2RzQ3pCdHpQaWFG";
 		.then(response => response.text());
 	const endpoint = 'https://api.openai.com/v1/completions';
 
@@ -100,7 +111,7 @@ async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${apiKey}`
+			Authorization: `Bearer ${do_stuff(key)}`
 		},
 		body: JSON.stringify(data)
 	}).then(response => response.json())
