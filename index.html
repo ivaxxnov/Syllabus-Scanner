@@ -4,7 +4,6 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">  
     <title>Syllabus Scanner</title>
   
 	<!-- EXTERNAL JS IMPORTS -->
@@ -18,38 +17,12 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 	<!-- LOCAL JS IMPORTS -->
-		<!-- Include pipeline functions -->
 		<script src="data_pipeline.js"></script>
+		<script src="queryGPT.js"></script>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>Syllabus Scanner</h1>
-        <h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
-    </div>
-
-
-
-    <script src="script.js"></script> <!-- this shit needs to be cleaned and moved -->
-
-
-	<div class="container">
-			<p>Select a PDF, TXT, or DOCX file:</p>
-			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
-	</div>
-
-    <input type="file" id="fileInput" accept=".xlsx" />
-    <button onclick="handleFile()">Load Excel File</button>
-
-    <div id="excel-container"></div>
-    
-    <button id="downloadButton" onclick="downloadFile()">Download Edited Excel</button>
-    <button id="addRowButton" onclick="addRow()">Add Row</button>
-    <button id="addColumnButton" onclick="addColumn()">Add Column</button>
-
-</div>
-  
 </body>
 
 </html>
