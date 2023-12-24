@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">  
+    <link rel="stylesheet" href="./styles.css">  
     <title>Syllabus Scanner</title>
   
 	<!-- EXTERNAL JS IMPORTS -->
@@ -29,25 +29,15 @@
         <h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
     </div>
 
-    <div class="container">
-        <p>Select a PDF file:</p>
-        <input type="file" id="pdfInput" multiple size="3" accept=".pdf">
-        <button id="upload-btn">Upload PDF</button>
-        <p>Click the button to download it:</p>
-        <button onclick="downloadPdf()">Download PDF</button>
-    </div>
-
-    <div class="sidebar">
-        <p>Uploaded Files:</p>
-        <ul id="file-list"></ul>
 
 
-    </div>
+    <script src="script.js"></script> <!-- this shit needs to be cleaned and moved -->
 
 
-    <script src="assets/script.js"></script> <!-- this shit needs to be cleaned and moved -->
-
-
+	<div class="container">
+			<p>Select a PDF, TXT, or DOCX file:</p>
+			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
+	</div>
 
     <input type="file" id="fileInput" accept=".xlsx" />
     <button onclick="handleFile()">Load Excel File</button>
@@ -58,12 +48,6 @@
     <button id="addRowButton" onclick="addRow()">Add Row</button>
     <button id="addColumnButton" onclick="addColumn()">Add Column</button>
 
-	<div class="container">
-			<p>Select a PDF, TXT, or DOCX file:</p>
-			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
-			<p>Click the button to download it (PDF ONLY):</p>
-			<button onclick="downloadPdf()">Download PDF</button>
-	</div>
 </div>
   
 </body>

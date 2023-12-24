@@ -1,3 +1,34 @@
+document.getElementById('upload-btn').addEventListener('click', function() {
+const fileList = document.getElementById('file-list');
+const input = document.getElementById('pdfInput');
+
+	Array.from(input.files).forEach(file => {
+			const listItem = document.createElement('li');
+			listItem.className = 'file-item';
+
+			const fileName = document.createElement('span');
+			const shortenedName = getShortenedFileName(file.name);
+			fileName.textContent = shortenedName;
+			fileName.title = file.name;
+			fileName.classList.add('file-name');
+			fileName.addEventListener('click', function() {
+					// add functionality for click from here
+					// maybe it uploads and converts to excel? idk
+			});
+
+			const removeButton = document.createElement('button');
+			removeButton.textContent = 'x';
+			removeButton.addEventListener('click', function() {
+					listItem.remove();
+			});
+
+			listItem.appendChild(fileName);
+			listItem.appendChild(removeButton);
+			fileList.appendChild(listItem);
+	});
+input.value = '';
+});
+
 function getShortenedFileName(fullName) {
     const maxLength = 20; // Set the maximum length for the displayed name
     if (fullName.length <= maxLength) {
@@ -7,38 +38,6 @@ function getShortenedFileName(fullName) {
     const truncatedName = fullName.substring(0, maxLength - 3);
     return truncatedName + '...' + extension;
 }
-
-document.getElementById('upload-btn').addEventListener('click', function() {
-const fileList = document.getElementById('file-list');
-const input = document.getElementById('pdfInput');
-
-Array.from(input.files).forEach(file => {
-    const listItem = document.createElement('li');
-    listItem.className = 'file-item';
-
-    const fileName = document.createElement('span');
-    const shortenedName = getShortenedFileName(file.name);
-    fileName.textContent = shortenedName;
-    fileName.title = file.name;
-    fileName.classList.add('file-name');
-    fileName.addEventListener('click', function() {
-        // add functionality for click from here
-        // maybe it uploads and converts to excel? idk
-    });
-
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'x';
-    removeButton.addEventListener('click', function() {
-        listItem.remove();
-    });
-
-    listItem.appendChild(fileName);
-    listItem.appendChild(removeButton);
-    fileList.appendChild(listItem);
-});
-input.value = '';
-});
-
 
 var originalSheet;
 
@@ -115,28 +114,3 @@ function initializeEmptyCells() {
     }
 }
 
-function downloadPdf() {
-    var input = document.getElementById('pdfInput');
-    var file = input.files[0];
-
-    if (file) {
-        var a = document.createElement('a');
-        var url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = file.name;
-
-        // Append the anchor to the body
-        document.body.appendChild(a);
-
-        // Trigger a click on the anchor
-        a.click();
-
-        // Remove the anchor from the body
-        document.body.removeChild(a);
-
-        // Release the object URL
-        URL.revokeObjectURL(url);
-    } else {
-        alert('Please select a PDF file');
-    }
-}
