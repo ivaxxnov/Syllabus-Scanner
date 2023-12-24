@@ -41,10 +41,10 @@ function displaySelectedFiles() {
 		let btn = document.createElement('btn');
 		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
 		btn.innerHTML = `
-			<i class="bi bi-file-earmark"></i>
+			<i class="bi bi-file-earmark h5"></i>
 			<div class="d-flex gap-2 w-100 justify-content-between">
 				<div>
-					<h6 class="mb-0">${fileName}</h6>
+					<h6 class="mb-0 h5">${fileName}</h6>
 					<p class="mb-0 opacity-75">${fileSize} kB</p>
 				</div>
 			</div>`;
@@ -69,7 +69,7 @@ function removeClickedFile(event) {
 	}
 
 	uploadedFiles.splice(index, 1);
-	event.target.parentNode.remove()
+	event.target.remove()
 	displaySelectedFiles();
 }
 
