@@ -38,16 +38,19 @@ function displaySelectedFiles() {
 		let fileName = uploadedFiles[i].name;
 		let fileSize = Math.round(uploadedFiles[i].size / 1000, 1);
 		
-		fileList.innerHTML += `
-			<btn class="list-group-item list-group-item-action d-flex gap-3 py-3">
-				<i class="bi bi-file-earmark"></i>
-				<div class="d-flex gap-2 w-100 justify-content-between">
-					<div>
-						<h6 class="mb-0">${fileName}</h6>
-						<p class="mb-0 opacity-75">${fileSize} kB</p>
-					</div>
+		let btn = document.createElement('btn');
+		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
+		btn.innerHTML = `
+			<i class="bi bi-file-earmark"></i>
+			<div class="d-flex gap-2 w-100 justify-content-between">
+				<div>
+					<h6 class="mb-0">${fileName}</h6>
+					<p class="mb-0 opacity-75">${fileSize} kB</p>
 				</div>
-			</btn>`;
+			</div>`;
+
+		btn.addEventListener("click", removeClickedFile);
+		fileList.appendChild(btn);
 	}
 }
 
@@ -56,9 +59,17 @@ function displaySelectedFiles() {
 
 function removeClickedFile(event) {
 	console.log("requested delete file");
-	let filename = event.target.innerHTML;
-	uploadedFiles.splice(uploadedFiles.indexOf(filename), 1); // delete from uploadedFiles array
-	event.target.remove()
+	let filename = event.target.parentNode.querySelector("h6").innerHTML;
+	let index = 0;
+	
+	for (; index < uploadedFiles.length; index++) {
+		if (uploadedFiles[index].name == filename) {
+			break;
+		}
+	}
+
+	uploadedFiles.splice(index, 1);
+	event.target.parentNode.remove()
 	displaySelectedFiles();
 }
 
