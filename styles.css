@@ -1,3 +1,7 @@
 .list-group {
 	--bs-list-group-action-hover-bg: rgba(255, 0, 0, 0.6);
 }
+.vr {
+	height: 200px;
+	visibility: hidden;
+}

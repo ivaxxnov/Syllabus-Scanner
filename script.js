@@ -39,7 +39,7 @@ function displaySelectedFiles() {
 		let fileName = uploadedFiles[i].name;
 		let fileSize = Math.round(uploadedFiles[i].size / 1000, 1);
 		
-		let btn = document.createElement('btn');
+		let btn = document.createElement('button');
 		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
 		btn.innerHTML = `
 			<i class="bi bi-file-earmark h5"></i>
