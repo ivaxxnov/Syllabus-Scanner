@@ -5,9 +5,34 @@ uploadedFiles = []
 /* Adding event listeners */
 document.getElementById("formFileMultiple").addEventListener("change", addFilesToGlobalFiles);
 document.getElementById("filelistplaceholder").addEventListener("click", removeClickedFile);
+document.getElementById("startpipeline").addEventListener("click", startProcessing);
+
+/*
+Processing Functions
+The following functions are built for pipeline handling
+*/
+function startProcessing(event) {
+	// disable file upload / delete / processing capabilities
+	document.getElementById("formFileMultiple").disabled = true;
+	document.getElementById("startpipeline").disabled = true;
+	document.querySelectorAll(".list-group-item").forEach(element => {element.disabled = true;});
+
+	// THE FOLLOWING IS A PLACEHOLDER
+	let spinner = document.createElement("div");
+	spinner.className = "spinner-border text-primary"
+	spinner.innerHTML = "WHOOOOOOOOOOO";
+	document.getElementById("fileuploadsection").appendChild(spinner);
 
 
-/* Functions */
+
+}
+
+
+
+/*
+File List Functions
+The following functions are built for the UI
+*/
 
 // adds uploaded files to global variable files and calls displaySelectedFiles()
 

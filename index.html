@@ -66,14 +66,20 @@
 	<!-- ----- PAGE CONTENT 2----- -->
 	<div class="container px-4 py-5">
     <div class="row row-cols-1 row-cols-md-2 align-items-md-start g-5 py-5">
-      <div class="col d-flex flex-column align-items-start gap-2">
+      <div class="col d-flex flex-column align-items-start gap-2" id="fileuploadsection">
 
 				<!-- ----- FILE UPLOAD SECTION----- -->
         <h2 class="fw-bold text-body-emphasis">Upload Your Syllabus Files Here!</h2>
         <p class="text-body-secondary">Supported filetypes are .pdf .docx and .txt</p>
 				<input class="form-control" type="file" accept=".docx,.pdf,.txt" id="formFileMultiple" multiple>
         <p class="h6 py-3">When ready, click this button to start processing your files!</p>
-				<button id="startpipeline" class="btn btn-primary mx-auto" disabled> Start Processing </button>
+				<button id="startpipeline" class="btn btn-primary mx-auto mb-3" disabled> Start Processing </button>
+
+				<!-- ----- LOADING BAR----- -->
+				<div class="progress w-100 my-3" role="progressbar" style="height: 20px">
+					<div class="progress-bar" style="width: 0%"> 1/5</div>
+				</div>
+
 				<div class="vr" id="thisisjustblankspace"></div>
 
       </div>
