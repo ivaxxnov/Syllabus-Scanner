@@ -8,6 +8,7 @@ document.getElementById("filelistplaceholder").addEventListener("click", removeC
 
 
 /* Functions */
+
 // adds uploaded files to global variable files and calls displaySelectedFiles()
 
 function addFilesToGlobalFiles(event) {
@@ -51,6 +52,13 @@ function displaySelectedFiles() {
 
 		btn.addEventListener("click", removeClickedFile);
 		fileList.appendChild(btn);
+	}
+
+	// set start processing button as disabled or enabled
+	if (uploadedFiles.length > 0) {
+		document.getElementById("startpipeline").disabled = false
+	} else {
+		document.getElementById("startpipeline").disabled = true;
 	}
 }
 
