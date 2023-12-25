@@ -1,5 +1,5 @@
 /*
-The code in this file is meant to be for pdf processing purposes only!
+The code in this file is meant to be for file processing purposes only!
 */
 
 
@@ -22,16 +22,8 @@ async function pipeline(file) {
 	let JSONData = await returnGPTJSON(string);	// please note the response is checked within the function
 	console.log("2.5 - returnGPTJSON() returned:", JSONData);
 
-	console.log("3 - calling buildSpreadsheet() with JSON:", JSONData);
-	let spreadsheet = buildSpreadsheet(JSONData);
-	console.log("3.5 - buildSpreadsheet() returned:", spreadsheet);
-
-	console.log("4 - calling buildCalender() with JSON:", JSONData);
-	let calender = buildCalender(JSONData);
-	console.log("4.5 - buildCalender() returned:", calender);
-
-	console.log("PIPELINE END - pipeline returning:", [spreadsheet, calender]);
-	return [spreadsheet, calender];
+	console.log("PIPELINE END - pipeline returning:", JSONData);
+	return JSONData;
 }
 
 
@@ -265,61 +257,4 @@ function checkResponse(response) {
 
     return true;
     // if everything is good, true is returned.
-}
-
-
-/*
-build spreadsheet file with response
-PLEASE NOTE, the spreadsheet will be created by another team, it is up to the one responsible
-for this function to export that spreadsheet and save it in this file, and then put the assignments and due dates in their respective spots.
--- parameters: response
--- return: file (as object)
-*/
-function buildSpreadsheet(response) {
-	let sheetRaw = XLSX.readFile("./template.xlsx");
-	let sheetJSON = XLSX.utils.sheet_to_json(sheetRAW);
-	console.log(sheetJSON);
-
-	// TODO
-	// INSERT RESPONSE INTO SHEETJSON
-	// unfortunately still figuring out how to do proper mark weightings
-	// TODO
-	
-	let newSheet = XLSX.utils.book_new();
-	sheetRaw = XLSX.utils.json_to_sheet(sheetJSON);
-	let preparedFile = XLSX.utils.book_append_sheet(newSheet, "Syllabus-Scanner.xlsx");
-
-	return preparedFile;	
-}
-
-
-/*
-build calender importable file with response
-PLEASE NOTE, the filetype can be whatever you want, its up to you to do your research and choose
-a filetype thats both easy to work with using string manipulation and (mostly) universally importable.
--- parameters: response
--- return: file (as object)
-*/
-function buildCalender(response) {
-    let icsFileContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Your Organization//Your Product//EN\n";
-
-    response.schedule.forEach(event => {
-        const startDate = event.due_date.replace(/-/g, '') + 'T' + event.time.replace(/:/g, '') + '00';
-        const endDate = startDate; // Simple example: using the same start and end date
-
-        icsFileContent += "BEGIN:VEVENT\n";
-        icsFileContent += `DTSTART:${startDate}\n`;
-        icsFileContent += `DTEND:${endDate}\n`;
-        icsFileContent += `SUMMARY:${event.title}\n`;
-        icsFileContent += "END:VEVENT\n";
-    });
-
-    icsFileContent += "END:VCALENDAR";
-
-    // return only the iCalendar file content as a string
-    return icsFileContent;
-    /* outputs the ics 'code' for the chatgpt prompt, which you take put it in a text file
-    then change the text file into a ics file and you should see the events with their title and time in the
-    correct date depending on the response from chat gpt. */
-
 }

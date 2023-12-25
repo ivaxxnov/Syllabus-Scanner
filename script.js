@@ -57,7 +57,7 @@ function displayButtonSpinners() {
 
 function updateProgressBar() {
 	let pbar = document.querySelector(".progress-bar");
-	pbar.style.width = `${Math.round(finishedFiles.length / uploadedFiles.length, 0)}%`;
+	pbar.style.width = `${Math.round(finishedFiles.length * 100 / uploadedFiles.length, 0)}%`;
 }
 
 

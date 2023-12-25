@@ -1,6 +1,14 @@
 # Syllabus-Scanner
 currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/  
 
+## Planning
+
+so here is how it works now:
+the code in script.js gathers all the files from user, and simultaneously sends all of them to pipeline() in data_pipeline.js  
+as the pipeline() calls finish up and return data, they activate a callback that script.js recieves. it then sends that data to build_spreadsheet.js.  
+now i dont know what build spreadsheet.js is gonna do but its 1 of 2 things, its either gonna load them into a rendered spreadsheet on the page, or its gonna just prepare an xlsx file and a calender for download.  
+this project is fucked. thats all, thanks.
+
 ## Overview
 
 Syllabus-Scanner is a site designed to simplify the process of creating a schedule for the school semester. The site uses chatGPT to scan your Syllabus files and extracts key details such as course name, assignments, due dates, and quiz dates. The extracted information is then compiled into two files. A nicely formatted spreadsheet, sorted in order of due date, with colour coding for easy readability, as well as a calendar file which is able to be imported into any major calendar application (Google, Microsoft, Apple) for easy tracking. The files are then returned to the user for download.
