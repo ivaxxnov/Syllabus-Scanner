@@ -45,11 +45,9 @@ function finished(filename) {
 // adds spinners to buttons based on which are finished and which arent
 
 function displayButtonSpinners() {
-	let buttons = document.querySelectorAll("#button-name-size");
-	for (let i = 0; i < buttons.length; i++) {
-		let spinner = document.createElement("div");
-		spinner.className = "spinner-border text-primary"
-		buttons[i].appendChild(spinner);
+	// i know this looks mesys but it makes sense when you read it
+	for (div of document.querySelectorAll("#button-name-size")) {
+		div.querySelector(".spinner-border").style.display = finishedFiles.indexOf(div.parentElement.id) == -1 ? "" : "none";
 	}
 }
 
@@ -58,6 +56,7 @@ function displayButtonSpinners() {
 function updateProgressBar() {
 	let pbar = document.querySelector(".progress-bar");
 	pbar.style.width = `${Math.round(finishedFiles.length * 100 / uploadedFiles.length, 0)}%`;
+	pbar.innerHTML = `${finishedFiles.length} / ${uploadedFiles.length}`;
 }
 
 
@@ -98,6 +97,7 @@ function displaySelectedFiles() {
 		let fileSize = Math.round(uploadedFiles[i].size / 1000, 1);
 		
 		let btn = document.createElement('button');
+		btn.id = fileName;
 		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
 		btn.innerHTML = `
 			<i class="bi bi-file-earmark h5"></i>
@@ -106,6 +106,7 @@ function displaySelectedFiles() {
 					<h6 class="mb-0 h5">${fileName}</h6>
 					<p class="mb-0 opacity-75">${fileSize} kB</p>
 				</div>
+				<div class="spinner-border text-primary" style="display:none"></div>
 			</div>`;
 
 		btn.addEventListener("click", removeClickedFile);
