@@ -94,7 +94,6 @@ function do_stuff(s) {
 async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
 
 	const key = "LXNrS3JmV20wTFBpd1FvZm5LWThqVHV0bDNCRmJrUkpLVU9ITVAzb2RzQ3pCdHpQaWFG";
-		.then(response => response.text());
 	const endpoint = 'https://api.openai.com/v1/completions';
 
 	const data = {

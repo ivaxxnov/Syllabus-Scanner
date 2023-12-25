@@ -11,7 +11,7 @@ document.getElementById("startpipeline").addEventListener("click", startProcessi
 Processing Functions
 The following functions are built for pipeline handling
 */
-function startProcessing(event) {
+async function startProcessing(event) {
 	// disable file upload / delete / processing capabilities
 	document.getElementById("formFileMultiple").disabled = true;
 	document.getElementById("startpipeline").disabled = true;
@@ -23,7 +23,11 @@ function startProcessing(event) {
 	spinner.innerHTML = "WHOOOOOOOOOOO";
 	document.getElementById("fileuploadsection").appendChild(spinner);
 
+	// gonna make the pipeline work for just one document for now
+	// make it work for multiple later
 
+	let jsondata = await pipeline(uploadedFiles[0]);
+	console.log(jsondata);
 
 }
 

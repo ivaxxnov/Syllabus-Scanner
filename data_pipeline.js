@@ -8,17 +8,17 @@ handles the other functions for the pipeline and fits them all together
 -- parameters: file as object
 -- return: spreadsheet and calender as downloadable files
 */
-function pipeline(file) {
+async function pipeline(file) {
 	//leave console outputs, its very useful for debugging and doesnt bother the user
 	// its acceptable in a student project such as this one
 
 	console.log("PIPELINE START - pipeline called with file:", file);
 
 	console.log("1 - calling stringFromSyllabusFile()");
-	let string = stringFromSyllabusFile(file);
+	let string = await stringFromSyllabusFile(file);
 	console.log("1.5 - stringFromSyllabusFile() returned:", string);
 
-	console.log("2 - calling queryGPT() with string:", string);
+	console.log("2 - calling queryGPT() with string");
 	let JSONData = queryGPT(string);	// please note the response is checked within the function
 	console.log("2.5 - queryGPT() returned:", JSONData);
 
@@ -30,7 +30,7 @@ function pipeline(file) {
 	let calender = buildCalender(JSONData);
 	console.log("4.5 - buildCalender() returned:", calender);
 
-	console.log("PIPELINE END - pipeline returning:", [spreadsheet, calender);
+	console.log("PIPELINE END - pipeline returning:", [spreadsheet, calender]);
 	return [spreadsheet, calender];
 }
 
@@ -40,12 +40,12 @@ detects the filetype and uses the correct function to extract the text from it
 -- parameters: file as object
 -- return: string
 */
-function stringFromSyllabusFile(file) { 
+async function stringFromSyllabusFile(file) { 
     let fileExtension = file.name.split('.').pop().toLowerCase();
     //Extracts the file type by spliting and popping at the '.'
 
     if (fileExtension === 'pdf') {
-        return stringFromPDF(file);
+        return await stringFromPDF(file);
     } else if (fileExtension === 'txt') {
         return stringFromTXT(file);
     } else if (fileExtension === 'docx') {
@@ -141,14 +141,6 @@ function stringFromDOCX(DOCXfile) {
 
         reader.onload = function () {
             let arrayBuffer = this.result;
-
-/*
-check response to see if chatgpt spit out garbage or not.
-The response format will probably be json but its subject to change
--- parameters: response
--- return: boolena
-*/
-function checkResponse(resposne) {
             // Using mammoth.js to convert DOCX to plain text
             mammoth.extractRawText({ arrayBuffer: arrayBuffer })
                 .then(result => {
