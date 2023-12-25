@@ -92,16 +92,22 @@ function do_stuff(s) {
 async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
 
 	const key = "LXNrS3JmV20wTFBpd1FvZm5LWThqVHV0bDNCRmJrUkpLVU9ITVAzb2RzQ3pCdHpQaWFG";
-	const endpoint = 'https://api.openai.com/v1/completions';
+	const endpoint = 'https://api.openai.com/v1/chat/completions';
 
 	const data = {
-		model: 'gpt-3.5-turbo-instruct',
-		prompt: prompt,
+		model: 'gpt-3.5-turbo-1106',
 		temperature: temp,
-		max_tokens: 1000,
+		max_tokens: 3000,
 		top_p: top_p,
 		frequency_penalty: frequency_penalty,
-		presence_penalty: presence_penalty
+		presence_penalty: presence_penalty,
+		response_format: { "type": "json_object" },
+		messages: [
+			{
+				role:"system",
+				content:prompt
+			}
+		]
 	};
 
 	return fetch(endpoint, {
@@ -117,7 +123,8 @@ async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_
 // turns chatgpt response into JS object with our desired formatting
 function getTextFromGPT(gptResponse) {
 	if(gptResponse?.choices && gptResponse.choices.length >= 1) {
-		return gptResponse.choices[0].text
+		console.log(gptResponse)
+		return gptResponse['choices'][0]['message']['content']
 	}
 	console.error("Error parsing gpt response")
 	return ""
