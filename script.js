@@ -1,142 +1,141 @@
-function getShortenedFileName(fullName) {
-    const maxLength = 20; // Set the maximum length for the displayed name
-    if (fullName.length <= maxLength) {
-        return fullName;
-    }
-    const extension = fullName.split('.').pop();
-    const truncatedName = fullName.substring(0, maxLength - 3);
-    return truncatedName + '...' + extension;
+/* Global Variables */
+uploadedFiles = [];
+finishedFiles = [];
+
+
+/* Adding event listeners */
+document.getElementById("formFileMultiple").addEventListener("change", addFilesToGlobalFiles);
+document.getElementById("filelistplaceholder").addEventListener("click", removeClickedFile);
+document.getElementById("startpipeline").addEventListener("click", startProcessing);
+
+/*
+Processing Functions
+The following functions are built for pipeline handling
+*/
+
+// start processing, handles pipeline and shit
+
+async function startProcessing(event) {
+	// disable file upload / delete / processing capabilities
+	document.getElementById("formFileMultiple").disabled = true;
+	document.getElementById("startpipeline").disabled = true;
+	document.querySelectorAll(".list-group-item").forEach(element => {element.disabled = true;});
+	
+	// Graphics
+	displayButtonSpinners();
+	updateProgressBar();
+
+
+
+	// gonna make the pipeline work for just one document for now
+	// make it work for multiple later
+
+	let jsondata = await pipeline(uploadedFiles[0]);
+	finishedFiles.push(uploadedFiles[0].name);
+	console.log(jsondata);
+	
+
+
+	// Graphics
+	displayButtonSpinners();
+	updateProgressBar();
+
 }
 
-document.getElementById('upload-btn').addEventListener('click', function() {
-const fileList = document.getElementById('file-list');
-const input = document.getElementById('pdfInput');
+// adds spinners to buttons based on which are finished and which arent
 
-Array.from(input.files).forEach(file => {
-    const listItem = document.createElement('li');
-    listItem.className = 'file-item';
-
-    const fileName = document.createElement('span');
-    const shortenedName = getShortenedFileName(file.name);
-    fileName.textContent = shortenedName;
-    fileName.title = file.name;
-    fileName.classList.add('file-name');
-    fileName.addEventListener('click', function() {
-        // add functionality for click from here
-        // maybe it uploads and converts to excel? idk
-    });
-
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'x';
-    removeButton.addEventListener('click', function() {
-        listItem.remove();
-    });
-
-    listItem.appendChild(fileName);
-    listItem.appendChild(removeButton);
-    fileList.appendChild(listItem);
-});
-input.value = '';
-});
-
-
-var originalSheet;
-
-function handleFile() {
-    var fileInput = document.getElementById('fileInput');
-    var excelContainer = document.getElementById('excel-container');
-
-    var file = fileInput.files[0];
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        var data = new Uint8Array(e.target.result);
-        var workbook = XLSX.read(data, { type: 'array' });
-
-        var sheetName = workbook.SheetNames[0];
-        var sheet = workbook.Sheets[sheetName];
-
-        originalSheet = sheet;
-        var html = XLSX.utils.sheet_to_html(sheet, { editable: true });
-
-        excelContainer.innerHTML = html;
-        initializeEmptyCells();
-    };
-
-    reader.readAsArrayBuffer(file);
-}
-/*Download doesnt work :( the alert does though!*/
-function downloadFile() {
-    if (originalSheet) {
-        var editedWorkbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(editedWorkbook, XLSX.utils.table_to_sheet(document.getElementById('excel-container')));
-
-        var blob = XLSX.write(editedWorkbook, { bookType: 'xlsx', bookSST: false, type: 'blob' });
-
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'edited_file.xlsx';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    } else {
-        alert('Please load an Excel file first.');
-    }
+function displayButtonSpinners() {
+	let buttons = document.querySelectorAll("#button-name-size");
+	for (let i = 0; i < buttons.length; i++) {
+		let spinner = document.createElement("div");
+		spinner.className = "spinner-border text-primary"
+		buttons[i].appendChild(spinner);
+	}
 }
 
-function addRow() {
-    var table = document.querySelector('#excel-container table');
-    var newRow = table.insertRow(-1); // -1 inserts the row at the end
+// updates progress bar based on which are finished and which arent
 
-    for (var i = 0; i < table.rows[0].cells.length; i++) {
-        var newCell = newRow.insertCell(i);
-        newCell.innerHTML = '0'; // Initialize with '0'
-    }
+function updateProgressBar() {
+	let pbar = document.querySelector(".progress-bar");
+	pbar.style.width = `${Math.round(finishedFiles.length / uploadedFiles.length, 0)}%`;
 }
 
-function addColumn() {
-    var table = document.querySelector('#excel-container table');
 
-    for (var i = 0; i < table.rows.length; i++) {
-        var newRowCell = table.rows[i].insertCell(-1); // -1 inserts the cell at the end
-        newRowCell.innerHTML = '0'; // Initialize with '0'
-    }
+
+/*
+File List Functions
+The following functions are built for the File list functionality in the UI
+*/
+
+// adds uploaded files to global variable files and calls displaySelectedFiles()
+
+function addFilesToGlobalFiles(event) {
+	console.log("file upload detected");
+	let files = event.target.files;
+	
+	// prevent losers from spamming our website
+	if (uploadedFiles.length + files.length > 6) {
+		window.alert("No more 6 courses can be taken at a time!");
+		return;
+	}
+
+	for (let i = 0; i < files.length; i++) {
+		uploadedFiles.push(files[i]);
+	}
+	displaySelectedFiles();
 }
 
-function initializeEmptyCells() {
-    var table = document.querySelector('#excel-container table');
 
-    for (var i = 0; i < table.rows.length; i++) {
-        for (var j = 0; j < table.rows[i].cells.length; j++) {
-            if (table.rows[i].cells[j].innerHTML === '') {
-                table.rows[i].cells[j].innerHTML = '0'; // Initialize with '0'
-            }
-        }
-    }
+// lists the syllabus files uploaded to the page by the user
+
+function displaySelectedFiles() {
+	console.log("refreshing selected file list");
+	let fileList = document.getElementById('selectedfilelist');
+	fileList.innerHTML = "";
+	
+	for (let i = 0; i < uploadedFiles.length; i++) {
+		let fileName = uploadedFiles[i].name;
+		let fileSize = Math.round(uploadedFiles[i].size / 1000, 1);
+		
+		let btn = document.createElement('button');
+		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
+		btn.innerHTML = `
+			<i class="bi bi-file-earmark h5"></i>
+			<div id="button-name-size" class="d-flex gap-2 w-100 justify-content-between">
+				<div>
+					<h6 class="mb-0 h5">${fileName}</h6>
+					<p class="mb-0 opacity-75">${fileSize} kB</p>
+				</div>
+			</div>`;
+
+		btn.addEventListener("click", removeClickedFile);
+		fileList.appendChild(btn);
+	}
+
+	// set start processing button as disabled or enabled
+	if (uploadedFiles.length > 0) {
+		document.getElementById("startpipeline").disabled = false
+	} else {
+		document.getElementById("startpipeline").disabled = true;
+	}
 }
 
-function downloadPdf() {
-    var input = document.getElementById('pdfInput');
-    var file = input.files[0];
 
-    if (file) {
-        var a = document.createElement('a');
-        var url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = file.name;
+// removes the clicked file from the files list and calls displaySelectedFiles() {
 
-        // Append the anchor to the body
-        document.body.appendChild(a);
+function removeClickedFile(event) {
+	console.log("requested delete file");
+	let filename = event.target.parentNode.querySelector("h6").innerHTML;
+	let index = 0;
+	
+	for (; index < uploadedFiles.length; index++) {
+		if (uploadedFiles[index].name == filename) {
+			break;
+		}
+	}
 
-        // Trigger a click on the anchor
-        a.click();
-
-        // Remove the anchor from the body
-        document.body.removeChild(a);
-
-        // Release the object URL
-        URL.revokeObjectURL(url);
-    } else {
-        alert('Please select a PDF file');
-    }
+	uploadedFiles.splice(index, 1);
+	event.target.remove()
+	displaySelectedFiles();
 }
+

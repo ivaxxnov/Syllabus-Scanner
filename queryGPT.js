@@ -1,20 +1,18 @@
 /*
 Seperate Function for building query GPT function.
 */
+
 /**
- * takes a syllabus and returns a JSON file with the wanted data, in the established format
- * @param syllabus the example_syllabus as a string
- * @returns {null}
+ * takes a syllabus and returns a JSON string with the wanted data, in the established format
+ * @param syllabus the syllabus
+ * @returns {Promise<string | string>} the JSON as a string
  */
 function parse_syllabus(syllabus) {
-	// use prompt 1
-	// use response 1 in prompt 2
-	// parse response 2 and return the formatted JSON
-
-	queryGPT(buildPrompt(syllabus)).then(response_1 => {
-		console.log(getTextFromGPT(response_1));
+	return queryGPT(buildPrompt(syllabus)).then(response_1 => {
+		return getTextFromGPT(response_1);
 	}).catch(error => {
 		console.error('Error:', error);
+		return ""
 	});
 }
 
@@ -94,17 +92,22 @@ function do_stuff(s) {
 async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
 
 	const key = "LXNrS3JmV20wTFBpd1FvZm5LWThqVHV0bDNCRmJrUkpLVU9ITVAzb2RzQ3pCdHpQaWFG";
-		.then(response => response.text());
-	const endpoint = 'https://api.openai.com/v1/completions';
+	const endpoint = 'https://api.openai.com/v1/chat/completions';
 
 	const data = {
-		model: 'gpt-3.5-turbo-instruct',
-		prompt: prompt,
+		model: 'gpt-3.5-turbo-1106',
 		temperature: temp,
-		max_tokens: 1000,
+		max_tokens: 3000,
 		top_p: top_p,
 		frequency_penalty: frequency_penalty,
-		presence_penalty: presence_penalty
+		presence_penalty: presence_penalty,
+		response_format: { "type": "json_object" },
+		messages: [
+			{
+				role:"system",
+				content:prompt
+			}
+		]
 	};
 
 	return fetch(endpoint, {
@@ -117,10 +120,11 @@ async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_
 	}).then(response => response.json())
 }
 
-// turns chatgpt response object into string with the response
+// turns chatgpt response into JS object with our desired formatting
 function getTextFromGPT(gptResponse) {
 	if(gptResponse?.choices && gptResponse.choices.length >= 1) {
-		return gptResponse.choices[0].text
+		console.log(gptResponse)
+		return gptResponse['choices'][0]['message']['content']
 	}
 	console.error("Error parsing gpt response")
 	return ""

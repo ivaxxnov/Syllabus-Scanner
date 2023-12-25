@@ -3,42 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://ivaxxnov.github.io/Syllabus-Scanner/assets/styles.css">
-    <title>About Us</title>
+    <title>Syllabus Scanner</title>
+  
+	<!-- EXTERNAL JS IMPORTS -->
+		<!-- PDF.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+		<!-- mammoth.js (DOCX reading)-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+		<!-- Sheet.js version 0.20.1 -->
+		<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+		<!-- Bootstrap Imports -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+	<!-- LOCAL JS IMPORTS -->
+		<script src="data_pipeline.js"></script>
+		<script src="queryGPT.js"></script>
 </head>
+
 <body>
+	<!-- ----- PAGE HEADER ----- -->
+	<div class="container">
+	<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+			<span class="fs-4">Syllabus-Scanner</span>
+		</a>
 
-<div class="header">
-    <h1>The Team Behind Syllabus Scanner</h1>
-		<h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
-</div>
+		<ul class="nav nav-pills">
+			<li class="nav-item"><a href="./" class="nav-link">
+				<i class="bi bi-house-fill mx-auto mb-1"> </i> Home</a>
+			</li>
+			<li class="nav-item"><a href="./about.html" class="nav-link active" aria-current="page">
+				<i class="bi bi-person-circle mx-auto mb-1"> </i> About</a>
+			</li>
+			<li class="nav-item"><a href="https://github.com/ivaxxnov/Syllabus-Scanner/tree/main" class="nav-link">
+				<i class="bi bi-github mx-auto mb-1"> </i> Github</a>
+			</li>
+		</ul>
+	</header>
+	</div>
 
-    <div class="main">
 
-        <div class="container team-member">
-            <h2>Chris Gil</h2>
-            <p>Professional Cutiepie</p>
-            <p>This shit aint nothing to me man. I'm moving different</p>
-            <a href="https://github.com/CGil4444" target="_blank">
-                <button>Github</button>
-            </a>
-            <br><br>
-            <img src="https://i.kym-cdn.com/photos/images/original/002/214/197/f78" alt="Ralsei Doobie Image">
+	<!-- ----- CARDS ----- -->
+	<div class="container px-4 py-5">
+    <h2 class="pb-2 border-bottom">Project Contributers</h2>
+    
+		<!-- START OF ROW 1 -->
+		<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+			
+			<!-- EXAMPLE CARD START -->
+      <div class="col text-center">
+					<img class = "rounded mb-3" src="https://media.licdn.com/dms/image/C4E03AQEWZ8aBJ_6eYQ/profile-displayphoto-shrink_200_200/0/1655086428413?e=2147483647&v=beta&t=1R5t5AyJ7Hxpdg-24HX5DnE54u95HyPs-cHIvA3syP4" width="200" height="200">
+					<h2 class="text-body-emphasis">Kian Bahasadri</h2>
+					<h4 class="stuff"> Project Manager</h4>
+					<p>An outstanding project manager, he excels in harmonizing team dynamics and skillsets, ensuring project success. His innovative approach consistently leads to exceeding project goals.</p>
+				<div class="d-flex flex-row justify-content-evenly">
+					<a href="https://github.com/KianBahasadri" class="nav-link"><i class="bi bi-github h1"> </i></a>
+					<a href="https://ca.linkedin.com/in/kian-bahasadri" class="nav-link"><i class="bi bi-linkedin h1"> </i></a>
+					<a href="https://www.youtube.com/channel/Mr-Clever" class="nav-link"><i class="bi bi-youtube h1"> </i></a>
+					<a href="discordapp.com/users/kianb" class="nav-link"><i class="bi bi-discord h1"> </i></a>
+				</div>
+			<!-- EXAMPLE CARD FINISH -->
+
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"></use></svg>
         </div>
-
-        <div class="container team-member">
-            <h2>Gus Fring</h2>
-            <p>i dont know walt...</p>
-            <p>Amon Gus is a skilled technologist with expertise in...</p>
-            <a href="https://www.innersloth.com/games/among-us/" target="_blank">
-                <button>Github</button>
-            </a>
-            <br><br>
-            <img src="https://static.wikia.nocookie.net/amogus/images/c/cc/Amogbob.png/revision/latest?cb=20210720212859" alt="Amon Gus Image">
-
+        <h3 class="fs-2 text-body-emphasis">Featured title</h3>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <a href="#" class="icon-link">
+          Call to action
+          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
         </div>
+        <h3 class="fs-2 text-body-emphasis">Featured title</h3>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <a href="#" class="icon-link">
+          Call to action
+          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+      </div>
+		</div>
+		<!-- END OF ROW 1 -->
 
-    </div>
+  </div>
+
 
 </body>
+
 </html>

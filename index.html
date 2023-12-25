@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">  
     <title>Syllabus Scanner</title>
   
 	<!-- EXTERNAL JS IMPORTS -->
@@ -14,58 +12,102 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 		<!-- Sheet.js version 0.20.1 -->
 		<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-    <!-- JQuery, wtf i didnt even know we were using jquery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		<!-- Bootstrap Imports -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
 	<!-- LOCAL JS IMPORTS -->
-		<!-- Include pipeline functions -->
 		<script src="data_pipeline.js"></script>
+		<script src="queryGPT.js"></script>
 </head>
 
+
 <body>
-
-    <div class="header">
-        <h1>Syllabus Scanner</h1>
-        <h2><a href="https://ivaxxnov.github.io/Syllabus-Scanner/">Home</a> <a href="https://ivaxxnov.github.io/Syllabus-Scanner/about.html">About</a></h2>
-    </div>
-
-    <div class="container">
-        <p>Select a PDF file:</p>
-        <input type="file" id="pdfInput" multiple size="3" accept=".pdf">
-        <button id="upload-btn">Upload PDF</button>
-        <p>Click the button to download it:</p>
-        <button onclick="downloadPdf()">Download PDF</button>
-    </div>
-
-    <div class="sidebar">
-        <p>Uploaded Files:</p>
-        <ul id="file-list"></ul>
-
-
-    </div>
-
-
-    <script src="assets/script.js"></script> <!-- this shit needs to be cleaned and moved -->
-
-
-
-    <input type="file" id="fileInput" accept=".xlsx" />
-    <button onclick="handleFile()">Load Excel File</button>
-
-    <div id="excel-container"></div>
-    
-    <button id="downloadButton" onclick="downloadFile()">Download Edited Excel</button>
-    <button id="addRowButton" onclick="addRow()">Add Row</button>
-    <button id="addColumnButton" onclick="addColumn()">Add Column</button>
-
+	<!-- ----- PAGE HEADER ----- -->
 	<div class="container">
-			<p>Select a PDF, TXT, or DOCX file:</p>
-			<input type="file" id="pdfInput" accept=".pdf, .txt, .docx">
-			<p>Click the button to download it (PDF ONLY):</p>
-			<button onclick="downloadPdf()">Download PDF</button>
+		<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+			<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<span class="fs-4">Syllabus-Scanner</span>
+			</a>
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><a href="./" class="nav-link active" aria-current="page">
+					<i class="bi bi-house-fill mx-auto mb-1"> </i> Home</a>
+				</li>
+				<li class="nav-item"><a href="./about.html" class="nav-link">
+					<i class="bi bi-person-circle mx-auto mb-1"> </i> About</a>
+				</li>
+				<li class="nav-item"><a href="https://github.com/ivaxxnov/Syllabus-Scanner/tree/main" class="nav-link">
+					<i class="bi bi-github mx-auto mb-1"> </i> Github</a>
+				</li>
+			</ul>
+		</header>
 	</div>
-</div>
-  
+
+
+	<!-- ----- PAGE CONTENT 1----- -->
+	<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+				<img class="d-block mx-auto mb-4 rounded-circle" src="logo.webp" alt="" height="400">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">What Can It Do For Me?</h1>
+				<p class="container h4 pe-10"> Syllabus-Scanner is a student-built tool that employs ChatGPT to analyze syllabus documents to extract essential information like deadlines and weights! It then compiles it into a spreadsheet with many useful functions and an importable calendar file that you can use anywhere!</p>
+					<div class="d-grid gap-2 mt-5 d-md-flex justify-content-center">
+          <a type="button" href="./about.html" class="btn btn-primary btn-lg px-4 me-md-2"> Meet The Team!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+	<!-- ----- PAGE CONTENT 2----- -->
+	<div class="container px-4 py-5">
+    <div class="row row-cols-1 row-cols-md-2 align-items-md-start g-5 py-5">
+      <div class="col d-flex flex-column align-items-start gap-2" id="fileuploadsection">
+
+				<!-- ----- FILE UPLOAD SECTION----- -->
+        <h2 class="fw-bold text-body-emphasis">Upload Your Syllabus Files Here!</h2>
+        <p class="text-body-secondary">Supported filetypes are .pdf .docx and .txt</p>
+				<input class="form-control" type="file" accept=".docx,.pdf,.txt" id="formFileMultiple" multiple>
+        <p class="h6 py-3">When ready, click this button to start processing your files!</p>
+				<button id="startpipeline" class="btn btn-primary mx-auto mb-3" disabled> Start Processing </button>
+
+				<!-- ----- LOADING BAR----- -->
+				<div class="progress w-100 my-3" role="progressbar" style="height: 20px">
+					<div class="progress-bar" style="width: 0%"> 1/5</div>
+				</div>
+
+				<div class="vr" id="thisisjustblankspace"></div>
+
+      </div>
+				
+				<!-- ----- SELECTED FILES LIST----- -->
+      <div class="col">
+			<h2 class="pb-2 border-bottom">Selected Files:</h2>
+				<ul class="list-group" id="selectedfilelist">
+				
+				<!-- ----- PLACEHOLDER BUTTON----- -->
+				<button id="filelistplaceholder" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+					<i class="bi bi-file-earmark h5"></i>
+					<div id="button-name-size" class="d-flex gap-2 w-100 justify-content-between">
+						<div>
+							<h6 class="mb-0 h5">File Example</h6>
+							<p class="mb-0 opacity-75">5kB</p>
+						</div>
+					</div>
+				</button>
+
+				</ul>
+			</div>
+
+    </div>
+  </div>
+
+	<script src="script.js"></script>
+	<link href="./styles.css" rel="stylesheet">
 </body>
 
 </html>
