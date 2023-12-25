@@ -167,20 +167,20 @@ Assume that you are able to get a response object (as seen in the example) with 
 If the response object is bad (use checkResponse) then re-prompt gpt.
 do not get stuck in an infinite loop--if gpt is giving us garbage a couple times then terminate.
 -- parameters: prompt
--- return: chatgdp response as an object (will probably be a promise)
+-- return: chatgdp response as an object following our formatting
 */
-async function queryGPT(prompt) {
+async function queryGPT(syllabus) {
     const maxRetries = 3;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         // went with 3 tries, seemed like a good number of tries, can be changed easily
         
         try {
-            const response = await sendPromptToGPT(prompt); 
+            const response = await parse_syllabus(syllabus);
             // this needs to be replaced with the actual api call function
             
             if (checkResponse(response)) {
-                return response; 
+                return JSON.parse(response);
                 // returning what chatgpt responsed with once its checked to see if its good
             }
             console.log(`Attempt ${attempt}: Invalid response from gpt, retrying...`);
@@ -199,19 +199,33 @@ async function queryGPT(prompt) {
 /*
 check response to see if chatgpt spit out garbage or not
 (if it has all the fields it should have, and fields like date/time are formatted correctly)
--- parameters: response
+-- parameters: response as a JSON string
 -- return: boolena
 */
 function checkResponse(response) {
+    if(!response) {
+        console.log("Empty Response")
+        return false
+    }
+
+    let obj = ""
+    try {
+        obj = JSON.parse(response)
+    } catch (e) {
+        console.log("Bad JSON Formatting")
+        console.log(e)
+        return false
+    }
+
     // Check for the presence of key fields
-    if (!response.subject || !Array.isArray(response.schedule) || !response.marking_weights) {
+    if (!obj.subject || !Array.isArray(obj.schedule) || !obj.marking_weights) {
         console.log("Response is missing one or more key fields.");
         return false;
         // key information like subject, schedule etc are checked.
     }
 
     // Check each schedule item for correct structure and valid date/time
-    for (const item of response.schedule) {
+    for (const item of obj.schedule) {
 
         const date = new Date(item.due_date);
         // used built in techniques to set the date
@@ -229,9 +243,9 @@ function checkResponse(response) {
     // Check marking weights: Ensure all values are numbers and their sum equals 100
     let totalWeight = 0;
 
-    for (const key in response.marking_weights) {
+    for (const key in obj.marking_weights) {
 
-        const weight = response.marking_weights[key];
+        const weight = obj.marking_weights[key];
 
         if (typeof weight !== 'number' || weight < 0) {
             console.log(`Invalid weight for ${key}:`, weight);
@@ -242,8 +256,8 @@ function checkResponse(response) {
         // used a for loop to check the weight of each task and make sure its between 0 and 100 then added it to the total
     }
 
-    if (totalWeight !== 100) {
-        console.log("Total weights do not add up to 100:", totalWeight);
+    if (totalWeight !== 100 && totalWeight!== 1) {
+        console.log("Total weights do not add up to 100%:", totalWeight);
         // if total is not 100, we know something went wrong because each class only has 100% to distribute
 
         return false;

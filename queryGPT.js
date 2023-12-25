@@ -1,14 +1,15 @@
 /*
 Seperate Function for building query GPT function.
 */
+
 /**
- * takes a syllabus and returns a JSON file with the wanted data, in the established format
- * @param syllabus the example_syllabus as a string
- * @returns {null}
+ * takes a syllabus and returns a JSON string with the wanted data, in the established format
+ * @param syllabus the syllabus
+ * @returns {Promise<string | string>} the JSON as a string
  */
 function parse_syllabus(syllabus) {
 	return queryGPT(buildPrompt(syllabus)).then(response_1 => {
-		return getParsedObjectFromGPT(response_1);
+		return getTextFromGPT(response_1);
 	}).catch(error => {
 		console.error('Error:', error);
 		return ""
@@ -114,10 +115,9 @@ async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_
 }
 
 // turns chatgpt response into JS object with our desired formatting
-function getParsedObjectFromGPT(gptResponse) {
+function getTextFromGPT(gptResponse) {
 	if(gptResponse?.choices && gptResponse.choices.length >= 1) {
-		const text = gptResponse.choices[0].text
-		return JSON.parse(text)
+		return gptResponse.choices[0].text
 	}
 	console.error("Error parsing gpt response")
 	return ""
