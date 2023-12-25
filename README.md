@@ -1,40 +1,36 @@
 # Syllabus-Scanner
-currently hosted at: https://ivaxxnov.github.io/Syllabus-Scanner/  
 
-## Planning
+Syllabus-Scanner is a web application designed to streamline the process of organizing schedules for the school semester. It leverages chatGPT to analyze syllabus files, extracting critical information such as course names, assignment details, due dates, and quiz dates. This data is then compiled into user-friendly formats: a color-coded, sorted spreadsheet and a calendar file compatible with major calendar applications (Google, Microsoft, Apple) for effortless tracking.
 
-so here is how it works now:
-the code in script.js gathers all the files from user, and simultaneously sends all of them to pipeline() in data_pipeline.js  
-as the pipeline() calls finish up and return data, they activate a callback that script.js recieves. it then sends that data to build_spreadsheet.js.  
-now i dont know what build spreadsheet.js is gonna do but its 1 of 2 things, its either gonna load them into a rendered spreadsheet on the page, or its gonna just prepare an xlsx file and a calender for download.  
-this project is fucked. thats all, thanks.
-
-## Overview
-
-Syllabus-Scanner is a site designed to simplify the process of creating a schedule for the school semester. The site uses chatGPT to scan your Syllabus files and extracts key details such as course name, assignments, due dates, and quiz dates. The extracted information is then compiled into two files. A nicely formatted spreadsheet, sorted in order of due date, with colour coding for easy readability, as well as a calendar file which is able to be imported into any major calendar application (Google, Microsoft, Apple) for easy tracking. The files are then returned to the user for download.
+**Live Demo/Hosted At**: [Syllabus-Scanner](https://ivaxxnov.github.io/Syllabus-Scanner/)
 
 ## How It Works
 
-1. **Upload Syllabi**: Users drag and drop their syllabi files into a designated box on the interface.
+1. **Upload Syllabi**: Users can upload their syllabus files by dragging and dropping them into the upload section on the web interface.
 
-2. **Processing**: Syllabus-Scanner sends the uploaded files through a processing pipeline for scanning and formatting.
+2. **Processing**: The application processes the uploaded files through a pipeline, extracting and formatting the necessary information.
 
-3. **Output**: The processed data is then compiled into downloadable files and returned to the user.
+3. **Output**: Users receive neatly organized, downloadable files – a spreadsheet and a calendar file, ready for use.
 
-#### User Interface Step-Through:
-1. Interface clearly displays file upload section
-2. User uploads files and starts process with button
-3. Calls pipeline and gives it files
-4. While waiting for response from pipeline, displays a progress bar
-5. Pipeline returns the files
-7. interface clearly presents files for download
+### User Interface Workflow
 
-#### Pipeline Step-Through:
-- Single handler function called "pipeline()" will handle all subsequent functions 
-1. PDF text extraction
-2. Build prompt using extracted text
-3. query gpt with prompt
-4. check gpt response
-5. insert values from response into grade calc spreadsheet file
-6. insert values from response into calendar file
-7. return files
+- **File Upload**: The interface allows users to upload syllabus files easily.
+- **Start Process**: Users initiate the processing with a button click.
+- **Progress Bar**: While the files are being processed, a progress bar indicates the ongoing operation.
+- **Download Processed Files**: After processing, the interface presents the files for download.
+
+### Data Processing Pipeline
+
+- **Pipeline Handler**: A function named `pipeline()` orchestrates the entire processing workflow.
+- **Steps in the Pipeline**:
+  1. Extract text from PDF files.
+  2. Build a prompt from the extracted text.
+  3. Query chatGPT with the prompt.
+  4. Validate the response from chatGPT.
+  5. Populate a spreadsheet with data for grade calculations.
+  6. Generate a calendar file with the processed data.
+  7. Return the prepared files for download.
+
+## Project Status
+
+This project is currently in development. Key functionalities are being implemented and refined. Current Status: Testing/Refinement.
