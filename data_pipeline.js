@@ -18,9 +18,9 @@ async function pipeline(file) {
 	let string = await stringFromSyllabusFile(file);
 	console.log("1.5 - stringFromSyllabusFile() returned:", string);
 
-	console.log("2 - calling parse_syllabus() with string");
-	let JSONData = await parse_syllabus(string);	// please note the response is checked within the function
-	console.log("2.5 - parse_syllabus() returned:", JSONData);
+	console.log("2 - calling returnGPTJSON() with string");
+	let JSONData = await returnGPTJSON(string);	// please note the response is checked within the function
+	console.log("2.5 - returnGPTJSON() returned:", JSONData);
 
 	console.log("3 - calling buildSpreadsheet() with JSON:", JSONData);
 	let spreadsheet = buildSpreadsheet(JSONData);
@@ -169,7 +169,7 @@ do not get stuck in an infinite loop--if gpt is giving us garbage a couple times
 -- parameters: prompt
 -- return: chatgdp response as an object following our formatting
 */
-async function queryGPT(syllabus) {
+async function returnGPTJSON(syllabus) {
     const maxRetries = 3;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {

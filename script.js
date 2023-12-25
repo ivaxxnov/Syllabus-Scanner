@@ -25,22 +25,22 @@ async function startProcessing(event) {
 	displayButtonSpinners();
 	updateProgressBar();
 
-
-
 	// gonna make the pipeline work for just one document for now
 	// make it work for multiple later
-
 	let jsondata = await pipeline(uploadedFiles[0]);
-	finishedFiles.push(uploadedFiles[0].name);
+	finished(uploadedFiles[0].name);
 	console.log(jsondata);
-	
+}
 
 
-	// Graphics
+// update graphics when a file finishes processing
+
+function finished(filename) {
+	finishedFiles.push(filename);
 	displayButtonSpinners();
 	updateProgressBar();
-
 }
+	
 
 // adds spinners to buttons based on which are finished and which arent
 
