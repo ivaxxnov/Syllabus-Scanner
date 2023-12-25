@@ -18,9 +18,9 @@ async function pipeline(file) {
 	let string = await stringFromSyllabusFile(file);
 	console.log("1.5 - stringFromSyllabusFile() returned:", string);
 
-	console.log("2 - calling queryGPT() with string");
-	let JSONData = queryGPT(string);	// please note the response is checked within the function
-	console.log("2.5 - queryGPT() returned:", JSONData);
+	console.log("2 - calling parse_syllabus() with string");
+	let JSONData = await parse_syllabus(string);	// please note the response is checked within the function
+	console.log("2.5 - parse_syllabus() returned:", JSONData);
 
 	console.log("3 - calling buildSpreadsheet() with JSON:", JSONData);
 	let spreadsheet = buildSpreadsheet(JSONData);
