@@ -21,15 +21,20 @@ async function startProcessing(event) {
 	document.getElementById("startpipeline").disabled = true;
 	document.querySelectorAll(".list-group-item").forEach(element => {element.disabled = true;});
 	
-	// Graphics
+	// Show progress bar, start spinners
+	document.querySelector(".progress.w-100.my-3").style.display = "";
 	displayButtonSpinners();
-	updateProgressBar();
 
 	// gonna make the pipeline work for just one document for now
 	// make it work for multiple later
 	let jsondata = await pipeline(uploadedFiles[0]);
 	finished(uploadedFiles[0].name);
-	console.log(jsondata);
+	console.log("Recieved JSON from pipeline");
+
+	renderSpreadsheet(jsondata);
+	document.querySelector("#thisisjustblankspace").remove();
+	
+
 }
 
 

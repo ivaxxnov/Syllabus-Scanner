@@ -13,6 +13,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 		<!-- Sheet.js version 0.20.1 -->
 		<script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+		<!-- tabulator (render spreadsheet) -->
+		<link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+		<script type="text/javascript"src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+		<!-- luxon (required by tabulator) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js" integrity="sha512-dUlSLLkxslGILhPdCkALwk4szPhp3xmZIKFtlUD+O9Lslq41Aksmdt5OGqpomDoT4FsCUH70jQU8ezZHI3v1RQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<!-- Bootstrap Imports -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -20,6 +25,7 @@
 
 	<!-- LOCAL JS IMPORTS -->
 		<script src="data_pipeline.js"></script>
+		<script src="spreadsheet.js"></script>
 		<script src="queryGPT.js"></script>
 </head>
 
@@ -77,7 +83,7 @@
 				<button id="startpipeline" class="btn btn-primary mx-auto mb-3" disabled> Start Processing </button>
 
 				<!-- ----- LOADING BAR----- -->
-				<div class="progress w-100 my-3" role="progressbar" style="height: 20px">
+				<div class="progress w-100 my-3" style="height: 20px; display:none;">
 					<div class="progress-bar" style="width: 0%"></div>
 				</div>
 
@@ -106,6 +112,12 @@
 
     </div>
   </div>
+
+	<!-- ----- PAGE CONTENT 3----- -->
+	<div class="container px-4 py-5">
+		<!-- ----- RENDER SPREADSHEET----- -->
+		<div id="example-table"></div>
+	</div>
 
 	<script src="script.js"></script>
 	<link href="./styles.css" rel="stylesheet">
