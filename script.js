@@ -1,5 +1,6 @@
 /* Global Variables */
-uploadedFiles = []
+uploadedFiles = [];
+finishedFiles = [];
 
 
 /* Adding event listeners */
@@ -11,31 +12,59 @@ document.getElementById("startpipeline").addEventListener("click", startProcessi
 Processing Functions
 The following functions are built for pipeline handling
 */
+
+// start processing, handles pipeline and shit
+
 async function startProcessing(event) {
 	// disable file upload / delete / processing capabilities
 	document.getElementById("formFileMultiple").disabled = true;
 	document.getElementById("startpipeline").disabled = true;
 	document.querySelectorAll(".list-group-item").forEach(element => {element.disabled = true;});
+	
+	// Graphics
+	displayButtonSpinners();
+	updateProgressBar();
 
-	// THE FOLLOWING IS A PLACEHOLDER
-	let spinner = document.createElement("div");
-	spinner.className = "spinner-border text-primary"
-	spinner.innerHTML = "WHOOOOOOOOOOO";
-	document.getElementById("fileuploadsection").appendChild(spinner);
+
 
 	// gonna make the pipeline work for just one document for now
 	// make it work for multiple later
 
 	let jsondata = await pipeline(uploadedFiles[0]);
+	finishedFiles.push(uploadedFiles[0].name);
 	console.log(jsondata);
+	
 
+
+	// Graphics
+	displayButtonSpinners();
+	updateProgressBar();
+
+}
+
+// adds spinners to buttons based on which are finished and which arent
+
+function displayButtonSpinners() {
+	let buttons = document.querySelectorAll("#button-name-size");
+	for (let i = 0; i < buttons.length; i++) {
+		let spinner = document.createElement("div");
+		spinner.className = "spinner-border text-primary"
+		buttons[i].appendChild(spinner);
+	}
+}
+
+// updates progress bar based on which are finished and which arent
+
+function updateProgressBar() {
+	let pbar = document.querySelector(".progress-bar");
+	pbar.style.width = `${Math.round(finishedFiles.length / uploadedFiles.length, 0)}%`;
 }
 
 
 
 /*
 File List Functions
-The following functions are built for the UI
+The following functions are built for the File list functionality in the UI
 */
 
 // adds uploaded files to global variable files and calls displaySelectedFiles()
@@ -72,7 +101,7 @@ function displaySelectedFiles() {
 		btn.className = "list-group-item list-group-item-action d-flex gap-3 py-3";
 		btn.innerHTML = `
 			<i class="bi bi-file-earmark h5"></i>
-			<div class="d-flex gap-2 w-100 justify-content-between">
+			<div id="button-name-size" class="d-flex gap-2 w-100 justify-content-between">
 				<div>
 					<h6 class="mb-0 h5">${fileName}</h6>
 					<p class="mb-0 opacity-75">${fileSize} kB</p>
