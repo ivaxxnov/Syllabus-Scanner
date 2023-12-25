@@ -12,7 +12,6 @@ Syllabus-Scanner is a site designed to simplify the process of creating a schedu
 2. **Processing**: Syllabus-Scanner sends the uploaded files through a processing pipeline for scanning and formatting.
 
 3. **Output**: The processed data is then compiled into downloadable files and returned to the user.
-## Planning
 
 #### User Interface Step-Through:
 1. Interface clearly displays file upload section
