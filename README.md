@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Interface" width="200" style="border-radius:50%;">
+</p>
+
 # Syllabus-Scanner
 
 Syllabus-Scanner is a web application designed to streamline the process of organizing schedules for the school semester. It leverages chatGPT to analyze syllabus files, extracting critical information such as course names, assignment details, due dates, and quiz dates. This data is then compiled into user-friendly formats: a color-coded, sorted spreadsheet and a calendar file compatible with major calendar applications (Google, Microsoft, Apple) for effortless tracking.
@@ -31,6 +35,13 @@ Syllabus-Scanner is a web application designed to streamline the process of orga
   6. Generate a calendar file with the processed data.
   7. Return the prepared files for download.
 
+## Tech Stack
+
+- **Frontend**: JavaScript, HTML, CSS, Bootstrap
+- **Backend**: chatGPT Queries
+- **Hosting**: GitHub Pages
+
 ## Project Status
 
 This project is currently in development. Key functionalities are being implemented and refined. Current Status: Testing/Refinement.
+
