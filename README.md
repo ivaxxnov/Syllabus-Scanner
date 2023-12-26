@@ -1,16 +1,21 @@
 <p align="center">
-  <img src="/assets/left.png" alt="Left Design" style="height: 150px;"/>
-  <img src="/assets/logo.jpg" alt="Syllabus Scanner Logo" style="height: 150px; width: auto;"/>
-  <img src="/assets/right.png" style="height: 150px;"/>
+  <img src="./assets/repo_logo.png" alt="Syllabus Scanner Logo"/>
 </p>
 
+<p align="center">
+An easy to use tool for students to consolidate their deadlines and assignments at the start of a term!
+</p>
+
+<p align="center">
+  Website is live at: https://ivaxxnov.github.io/Syllabus-Scanner/
+</p>
+
+***
 
 
-# Syllabus-Scanner
+# Features
 
-Syllabus-Scanner is a web application designed to streamline the process of organizing schedules for the school semester. It leverages chatGPT to analyze syllabus files, extracting critical information such as course names, assignment details, due dates, and quiz dates. This data is then compiled into user-friendly formats: a color-coded, sorted spreadsheet and a calendar file compatible with major calendar applications (Google, Microsoft, Apple) for effortless tracking.
-
-**Live Demo/Hosted At**: [Syllabus-Scanner](https://ivaxxnov.github.io/Syllabus-Scanner/)
+Syllabus-Scanner is a web application designed to streamline the process of organizing schedules for the school semester. It simultaneously processes multiple syllabus files using chatGPT to extract critical information such as course names, assignment details, due dates, and quiz dates. This data is then compiled into a spreadsheet and displayed in a user-friendly way, so it can be edited and corrected as the user pleases. Finally the data can be downladed as a sorted spreadsheet or a calendar file compatible with major calendar applications (Google, Microsoft, Apple) for an ease of mind throughout the school year.
 
 ## How It Works
 
@@ -48,12 +53,3 @@ Syllabus-Scanner is a web application designed to streamline the process of orga
 ## Project Status
 
 This project is currently in development. Key functionalities are being implemented and refined. Current Status: Testing/Refinement.
-
-#
-
-<p align="center">
-  <img src="/assets/left.png" alt="Left Design" style="height: 150px;"/>
-  <img src="/assets/logo.jpg" alt="Syllabus Scanner Logo" style="height: 150px; width: auto;"/>
-  <img src="/assets/right.png" style="height: 150px;"/>
-</p>
-
