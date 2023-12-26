@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="/images/left.png" alt="Left Design" style="height: 200px;"/>
-  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 200px; width: auto;"/>
-  <img src="/images/right.png" style="height: 200px;"/>
+  <img src="/images/left.png" alt="Left Design" style="height: 100px;"/>
+  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 100px; width: auto;"/>
+  <img src="/images/right.png" style="height: 100px;"/>
 </p>
 
 
@@ -52,8 +52,8 @@ This project is currently in development. Key functionalities are being implemen
 #
 
 <p align="center">
-  <img src="/images/left.png" alt="Left Design" style="height: 200px;"/>
-  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 200px; width: auto;"/>
-  <img src="/images/right.png" style="height: 200px;"/>
+  <img src="/images/left.png" alt="Left Design" style="height: 100px;"/>
+  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 100px; width: auto;"/>
+  <img src="/images/right.png" style="height: 100px;"/>
 </p>
 
