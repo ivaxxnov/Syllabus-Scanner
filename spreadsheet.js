@@ -24,7 +24,7 @@ renders spreadhseet
 returns table so script.js can export it
 */
 function renderSpreadsheet(sheetData) {
-	let numRows = 3;
+	let numRows = 0;
 	for (let i = sheetData.length-1; i > -1; i--) {
 		if (sheetData[i].CLASS != undefined) {
 			numRows++;
@@ -73,9 +73,14 @@ async function openAndFillTemplate(responses) {
 	let worksheet = workbook.Sheets[firstSheetName];
 	let sheetJSON = XLSX.utils.sheet_to_json(worksheet);
 	
+	let currRow = 0;
+
 	for (let i = 0; i < responses.length; i++) {
 		let response = responses[i];
 		let coursename = response.subject;
+		console.log("currently filling spreadsheet with coursename:", coursename);
+		console.log("responses", responses);
+		console.log("response", response);
 		let events = response.schedule;
 		
 		for (let j = 0; j < events.length; j++) {
@@ -83,13 +88,15 @@ async function openAndFillTemplate(responses) {
 				// sets courses on the right side of the spreadsheet
 				sheetJSON[j].COURSES = coursename;
 			}
+			
+			let event = events[j];
+			sheetJSON[currRow].CLASS = coursename;
+			sheetJSON[currRow].ASSIGNMENT = event.title;
+			sheetJSON[currRow].DUE_DATE = event.due_date;
+			sheetJSON[currRow].TIME = event.time;
+			sheetJSON[currRow].WEIGHT = 0;
 
-			let event = events[i];
-			sheetJSON[j].CLASS = coursename;
-			sheetJSON[j].ASSIGNMENT = event.title;
-			sheetJSON[j].DUE_DATE = event.due_date;
-			sheetJSON[j].TIME = event.time;
-			sheetJSON[j].WEIGHT = 0;
+			currRow++;
 		}
 	}
 
