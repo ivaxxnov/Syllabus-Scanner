@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="https://files.oaiusercontent.com/file-HhxFVMEWQo7WwxlWfzj9VO0R?se=2023-12-26T00%3A40%3A25Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dfd6cff0d-800b-4ff3-9379-55e8b618319b.webp&sig=te4OvLXMyAzHdoln60jbqb7%2B4wLeXMWfZVRxwlv9iPE%3D" alt="Left Design" style="height: 200px;"/>
-  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 200px; width: auto;"/>
-  <img src="https://files.oaiusercontent.com/file-HhxFVMEWQo7WwxlWfzj9VO0R?se=2023-12-26T00%3A40%3A25Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dfd6cff0d-800b-4ff3-9379-55e8b618319b.webp&sig=te4OvLXMyAzHdoln60jbqb7%2B4wLeXMWfZVRxwlv9iPE%3D" alt="Right Design" style="height: 200px;"/>
+  <img src="/images/left.png" alt="Left Design" style="height: 150px;"/>
+  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 150px; width: auto;"/>
+  <img src="/images/right.png" style="height: 150px;"/>
 </p>
 
 
@@ -52,8 +52,8 @@ This project is currently in development. Key functionalities are being implemen
 #
 
 <p align="center">
-  <img src="https://files.oaiusercontent.com/file-HhxFVMEWQo7WwxlWfzj9VO0R?se=2023-12-26T00%3A40%3A25Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dfd6cff0d-800b-4ff3-9379-55e8b618319b.webp&sig=te4OvLXMyAzHdoln60jbqb7%2B4wLeXMWfZVRxwlv9iPE%3D" alt="Left Design" style="height: 200px;"/>
-  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 200px; width: auto;"/>
-  <img src="https://files.oaiusercontent.com/file-HhxFVMEWQo7WwxlWfzj9VO0R?se=2023-12-26T00%3A40%3A25Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dfd6cff0d-800b-4ff3-9379-55e8b618319b.webp&sig=te4OvLXMyAzHdoln60jbqb7%2B4wLeXMWfZVRxwlv9iPE%3D" alt="Right Design" style="height: 200px;"/>
+  <img src="/images/left.png" alt="Left Design" style="height: 150px;"/>
+  <img src="https://ivaxxnov.github.io/Syllabus-Scanner/logo.webp" alt="Syllabus Scanner Logo" style="height: 150px; width: auto;"/>
+  <img src="/images/right.png" style="height: 150px;"/>
 </p>
 
