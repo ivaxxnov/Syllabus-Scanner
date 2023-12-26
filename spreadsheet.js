@@ -2,17 +2,40 @@
 
 /*
 this is like pipeline function but for spreadsheet
+returns table so script.js can export it
 */
 async function spreadsheetHandler(array_of_json) {
+	console.log("SPREADSHEET HANDLER START - called with array_of_json:", array_of_json);
+
+	console.log("1 - calling openAndFillTemplate()");
+  let sheetData = await openAndFillTemplate(array_of_json);
+	console.log("1.5 openAndFillTemplate returned:", sheetData);
+
+	console.log("2 - calling renderSpreadsheet()");
+	let table = renderSpreadsheet(sheetData);
+	console.log("2.5 renderSpreadsheet() returned table:", table);
+	console.log("table's keys before returning in spreadsheet.js", Object.keys(table));
+	
+	return table;
 }
 
-/*renders spreadhseet*/
-async function renderSpreadsheet(JSONDATA) {
-  let sheetData = await openAndFillTemplate(JSONDATA);
-  console.log("filled sheetData:", sheetData);
+/*
+renders spreadhseet
+returns table so script.js can export it
+*/
+function renderSpreadsheet(sheetData) {
+	let numRows = 3;
+	for (let i = sheetData.length-1; i > -1; i--) {
+		if (sheetData[i].CLASS != undefined) {
+			numRows++;
+		} else {
+			sheetData.pop();
+		}
+	}
+	numRows *= 30;
 
   let table = new Tabulator("#example-table", {
-    height:205,
+    height: `${numRows}`,
     data: sheetData,
     layout:"fitColumns", //fit columns to width of table (optional)
     columns: [
@@ -25,6 +48,8 @@ async function renderSpreadsheet(JSONDATA) {
       {title: "DONE", field: "DONE", hozAlign: "center", formatter: "tickCross", editor: "tickCross"}
     ],
   });
+	
+	return table;
 }
 
 
@@ -35,8 +60,8 @@ for this function to export that spreadsheet and save it in this file, and then 
 -- parameters: response
 -- return: file (as object)
 */
-async function openAndFillTemplate(response) {
-	console.log("building workbook");
+async function openAndFillTemplate(responses) {
+	console.log("filling template");
 	let responseFile = await fetch("./template.xlsx");
 
 	// do a bunch of bullshit to turn template file into an object
@@ -48,16 +73,24 @@ async function openAndFillTemplate(response) {
 	let worksheet = workbook.Sheets[firstSheetName];
 	let sheetJSON = XLSX.utils.sheet_to_json(worksheet);
 	
-	let coursename = response.subject;
-	let events = response.schedule;
-	
-	for (let i = 0; i < events.length; i++) {
-		let event = events[i];
-		sheetJSON[i].CLASS = coursename;
-		sheetJSON[i].ASSIGNMENT = event.title;
-		sheetJSON[i].DUE_DATE = event.due_date;
-		sheetJSON[i].TIME = event.time;
-		sheetJSON[i].WEIGHT = 0;
+	for (let i = 0; i < responses.length; i++) {
+		let response = responses[i];
+		let coursename = response.subject;
+		let events = response.schedule;
+		
+		for (let j = 0; j < events.length; j++) {
+			if (j == i) {
+				// sets courses on the right side of the spreadsheet
+				sheetJSON[j].COURSES = coursename;
+			}
+
+			let event = events[i];
+			sheetJSON[j].CLASS = coursename;
+			sheetJSON[j].ASSIGNMENT = event.title;
+			sheetJSON[j].DUE_DATE = event.due_date;
+			sheetJSON[j].TIME = event.time;
+			sheetJSON[j].WEIGHT = 0;
+		}
 	}
 
 	// TODO: INSERT WEIGHTINGS INTO SHEETJSON

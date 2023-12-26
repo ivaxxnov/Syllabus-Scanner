@@ -27,25 +27,32 @@ async function startProcessing(event) {
 
 	// gonna make the pipeline work for just one document for now
 	// make it work for multiple later
-	let jsondata = await pipeline(uploadedFiles[0]);
-	finished(uploadedFiles[0].name);
-	console.log("Recieved JSON from pipeline");
+	
 
-	renderSpreadsheet(jsondata);
+  let promises = [];
+  for (let i = 0; i < uploadedFiles.length; i++) {
+    let promise = pipeline(uploadedFiles[i]).then(function(jsonData) {
+      finishedFiles.push(uploadedFiles[i].name);
+      displayButtonSpinners();
+      updateProgressBar();
+      return jsonData; 
+    });
+    promises.push(promise);
+  }
+  let jsonDataArr = await Promise.all(promises);
+	
+	console.log("spreadsheet handler was called");
+	let table = await spreadsheetHandler(jsonDataArr);
+	console.log("spreadsheet handler returned:", table);
+
+	document.getElementById("downloaddata").disabled = false;
+	document.getElementById("downloaddata").addEventListener("click", function(){
+			table.download("xlsx", "data.xlsx", {sheetName:"My Data"});
+	});
+
 	document.querySelector("#thisisjustblankspace").remove();
-	
-
 }
 
-
-// update graphics when a file finishes processing
-
-function finished(filename) {
-	finishedFiles.push(filename);
-	displayButtonSpinners();
-	updateProgressBar();
-}
-	
 
 // adds spinners to buttons based on which are finished and which arent
 
