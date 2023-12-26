@@ -8,24 +8,25 @@ async function spreadsheetHandler(array_of_json) {
 
 /*renders spreadhseet*/
 async function renderSpreadsheet(JSONDATA) {
-	let sheetData = await openAndFillTemplate(JSONDATA);
-	console.log("filled sheetData:", sheetData);
-	
-		let table = new Tabulator("#example-table", {
-			height:205, 
-			data: sheetData, 
-			layout:"fitColumns", //fit columns to width of table (optional)
-			columns: [
-				{title: "CLASS", field: "CLASS", hozAlign: "center"},
-				{title: "ASSIGNMENT", field: "ASSIGNMENT", hozAlign: "center"},
-				{title: "DUE DATE", field: "DUE_DATE", sorter: "datetime", hozAlign: "center", formatter: "datetime", formatterParams: {outputFormat: "YYYY-MM-DD HH:mm"}},
-				{title: "TIME", field: "TIME", hozAlign: "center", formatter: "datetime", formatterParams: {outputFormat: "HH:mm"}},
-				{title: "GRADE", field: "GRADE", hozAlign: "center"},
-				{title: "WEIGHT", field: "WEIGHT", hozAlign: "center"},
-				{title: "DONE", field: "DONE", hozAlign: "center", formatter: "tickCross"}
-			],
-	});
+  let sheetData = await openAndFillTemplate(JSONDATA);
+  console.log("filled sheetData:", sheetData);
+
+  let table = new Tabulator("#example-table", {
+    height:205,
+    data: sheetData,
+    layout:"fitColumns", //fit columns to width of table (optional)
+    columns: [
+      {title: "CLASS", field: "CLASS", hozAlign: "left", width: 200, editor: "input"},
+      {title: "ASSIGNMENT", field: "ASSIGNMENT", hozAlign: "left", editor: "input"},
+      {title: "DUE DATE", field: "DUE_DATE", sorter: "date", hozAlign: "center", editor: "input"},
+      {title: "TIME", field: "TIME", hozAlign: "center", editor: "input", formatter: "date", formatterParams: {outputFormat: "HH:mm"}},
+      {title: "GRADE", field: "GRADE", hozAlign: "center", editor: "input"},
+      {title: "WEIGHT", field: "WEIGHT", hozAlign: "center", editor: "number"},
+      {title: "DONE", field: "DONE", hozAlign: "center", formatter: "tickCross", editor: "tickCross"}
+    ],
+  });
 }
+
 
 /*
 build spreadsheet file with response
