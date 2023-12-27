@@ -1,3 +1,49 @@
+/*
+Light/Dark Mode Functions
+Fuck this shit btw
+*/
+(() => {
+	'use strict'
+  
+	// Getting stored theme/Setting stored theme
+	const getStoredTheme = () => localStorage.getItem('theme')
+	const setStoredTheme = theme => localStorage.setItem('theme', theme)
+  
+	// If user does not have a stored theme, match their OS preference for light/dark mode
+	const getPreferredTheme = () => {
+		const storedTheme = getStoredTheme()
+		if (storedTheme) {
+			return storedTheme
+		}
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+	}
+  
+	// Switch theme and icons to opposite
+	const setTheme = theme => {
+		if (theme === 'dark') {
+		  document.documentElement.setAttribute('data-bs-theme', 'dark')
+		  document.getElementById('theme-icon').classList.add('bi-sun-fill')
+		  document.getElementById('theme-icon').classList.remove('bi-moon-fill')
+		} else {
+		  document.documentElement.setAttribute('data-bs-theme', 'light')
+		  document.getElementById('theme-icon').classList.add('bi-moon-fill')
+		  document.getElementById('theme-icon').classList.remove('bi-sun-fill')
+		}
+	}
+  
+	// Main function for the button, basically a pipeline for the theme change
+    const switchMode = () => {
+		const currentTheme = getStoredTheme() || getPreferredTheme()
+		const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+		setStoredTheme(newTheme)
+		setTheme(newTheme)
+	  }
+
+  	setTheme(getPreferredTheme());
+
+	window.switchMode = switchMode;
+})();
+
 /* Global Variables */
 uploadedFiles = [];
 finishedFiles = [];
@@ -151,4 +197,3 @@ function removeClickedFile(event) {
 	event.target.remove()
 	displaySelectedFiles();
 }
-
