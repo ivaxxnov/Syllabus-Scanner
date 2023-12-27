@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Syllabus Scanner</title>
   
 	<!-- EXTERNAL JS IMPORTS -->
@@ -34,19 +34,28 @@
 	<!-- ----- PAGE HEADER ----- -->
 	<div class="container">
 		<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-			<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-				<span class="fs-4">Syllabus-Scanner</span>
+			<a href="./index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<img src="./assets/new_logo.png" class="img-fluid me-2" width="50" height="50" >
+				<span class="fs-4">Syllabus Scanner</span>
 			</a>
 
-			<ul class="nav nav-pills">
-				<li class="nav-item"><a href="./" class="nav-link active" aria-current="page">
+			<ul class="nav nav-pills align-items-center">
+				<li class="nav-item"><a href="./index.html" class="nav-link">
 					<i class="bi bi-house-fill mx-auto mb-1"> </i> Home</a>
 				</li>
 				<li class="nav-item"><a href="./about.html" class="nav-link">
 					<i class="bi bi-person-circle mx-auto mb-1"> </i> About</a>
 				</li>
+				<li class="nav-item"><a href="https://forms.gle/Aug3FardKbStKmiy8" class="nav-link">
+					<i class="bi bi-flag-fill mx-auto mb-1"> </i> Report Bug/Feedback</a>
+				</li>
 				<li class="nav-item"><a href="https://github.com/ivaxxnov/Syllabus-Scanner/tree/main" class="nav-link">
 					<i class="bi bi-github mx-auto mb-1"> </i> Github</a>
+				</li>
+				<li class="nav-item ms-3">
+					<button class="btn btn-primary" onclick="switchMode()">
+						<i id="theme-icon" class="bi mx-auto mb-1"></i>
+					</button>
 				</li>
 			</ul>
 		</header>
