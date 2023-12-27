@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Syllabus Scanner</title>
   
 		<!-- Bootstrap Imports -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
 </head>
 
@@ -16,19 +17,28 @@
 	<!-- ----- PAGE HEADER ----- -->
 	<div class="container">
 	<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-			<span class="fs-4">Syllabus-Scanner</span>
+		<a href="./index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+			<img src="./assets/new_logo.png" class="img-fluid me-2" width="50" height="50" >
+			<span class="fs-4">Syllabus Scanner</span>
 		</a>
 
-		<ul class="nav nav-pills">
-			<li class="nav-item"><a href="./" class="nav-link">
+		<ul class="nav nav-pills align-items-center">
+			<li class="nav-item"><a href="./index.html" class="nav-link">
 				<i class="bi bi-house-fill mx-auto mb-1"> </i> Home</a>
 			</li>
-			<li class="nav-item"><a href="./about.html" class="nav-link active" aria-current="page">
+			<li class="nav-item"><a href="./about.html" class="nav-link">
 				<i class="bi bi-person-circle mx-auto mb-1"> </i> About</a>
+			</li>
+			<li class="nav-item"><a href="https://forms.gle/Aug3FardKbStKmiy8" class="nav-link">
+				<i class="bi bi-flag-fill mx-auto mb-1"> </i> Report Bug/Feedback</a>
 			</li>
 			<li class="nav-item"><a href="https://github.com/ivaxxnov/Syllabus-Scanner/tree/main" class="nav-link">
 				<i class="bi bi-github mx-auto mb-1"> </i> Github</a>
+			</li>
+			<li class="nav-item ms-3">
+				<button class="btn btn-primary" onclick="switchMode()">
+					<i id="theme-icon" class="bi mx-auto mb-1"></i>
+				</button>
 			</li>
 		</ul>
 	</header>
@@ -37,17 +47,16 @@
 
 	<!-- ----- CARDS ----- -->
 	<div class="container px-4 py-5">
-    <h2 class="pb-2 border-bottom">Project Contributers</h2>
+    <h2 class="pb-2 border-bottom">Project Contributors</h2>
     
 		<!-- START OF ROW 1 -->
-		<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+		<div class="row g-4 py-5 row-cols-1 row-cols-lg-4">
 			
 			<!-- EXAMPLE CARD START -->
       <div class="col text-center">
 					<img class = "rounded mb-3" src="./assets/kian.jpeg" width="200" height="200">
 					<h2 class="text-body-emphasis">Kian Bahasadri</h2>
-					<h4 class="stuff"> Project Manager</h4>
-					<p>An outstanding project manager, he excels in harmonizing team dynamics and skillsets, ensuring project success. His innovative approach consistently leads to exceeding project goals.</p>
+					<h3> <span class="badge bg-secondary">Project Manager</span></h3>
 				<div class="d-flex flex-row justify-content-evenly">
 					<a href="https://github.com/KianBahasadri" class="nav-link"><i class="bi bi-github h1"> </i></a>
 					<a href="https://ca.linkedin.com/in/kian-bahasadri" class="nav-link"><i class="bi bi-linkedin h1"> </i></a>
@@ -61,9 +70,8 @@
       <div class="col text-center">
 					<img class = "rounded mb-3" src="./assets/rory.jpeg" width="200" height="200">
 					<h2 class="text-body-emphasis">Rory Macdonald</h2>
-					<h4 class="stuff">Lead Data Pipeline Designer</h4>
-					<p>📚 I am a first-year student at Queen's University studying Computer Science! I'm knowledgeable in javascript, html, css, doing backflips, being awesome, and much more!!!</p>
-				<div class="d-flex flex-row justify-content-evenly">
+					<h3> <span class="badge bg-secondary">Lead Data Pipeline Designer</span></h3>
+				<div class="d-flex flex-row justify-content-center gap-5">
 					<a href="https://github.com/Incandescent-Turtle" class="nav-link"><i class="bi bi-github h1"> </i></a>
 					<a href="https://ca.linkedin.com/in/rory-mac" class="nav-link"><i class="bi bi-linkedin h1"> </i></a>
 				</div>
@@ -71,18 +79,30 @@
 			<!-- EXAMPLE CARD FINISH -->
 			<!-- EXAMPLE CARD START -->
 	<div class="col text-center">
-					<img class = "rounded mb-3" src="./assets/rafay.jpeg" width="200" height="200">
+					<img class = "rounded mb-3" src="./assets/rafay.jpg" width="200" height="200">
 					<h2 class="text-body-emphasis">Rafay Haque</h2>
-					<h4 class="stuff"> Data Pipeline Developer</h4>
-					<p>Hi, I'm Rafay Haque, a software design student at Queen's University. I'm on a path to become an entrepreneur, aiming to leverage my tech skills to develop products that simplify life and bring ease to everyday tasks.</p>
-				<div class="d-flex flex-row justify-content-evenly">
+					<h3> <span class="badge bg-secondary">Data Pipeline Developer</span></h3>
+				<div class="d-flex flex-row justify-content-center gap-5">
 					<a href="https://github.com/RafayHaque" class="nav-link"><i class="bi bi-github h1"> </i></a>
 					<a href="https://www.linkedin.com/in/rafay-haque-706054257/" class="nav-link"><i class="bi bi-linkedin h1"> </i></a>
-					<a href="rafayhaque10@gmail.com" class="nav-link"><i class="bi bi-Gmail h1"> </i></a>
+					<a href="mailto:jrafayhaque10@gmail.com" class="nav-link"><i class="bi-envelope-fill h1"> </i></a>
 				</div>
 	</div>
 			<!-- EXAMPLE CARD FINISH -->
+
+			<!-- EXAMPLE CARD START -->
+			<div class="col text-center">
+				<img class = "rounded mb-3" src="./assets/alex.jpg" width="200" height="200">
+				<h2 class="text-body-emphasis">Alexander Ivanov</h2>
+				<h3> <span class="badge bg-secondary">Software Engineer</span></h3>
+			<div class="d-flex flex-row justify-content-center gap-5">
+				<a href="https://github.com/ivaxxnov" class="nav-link"><i class="bi bi-github h1"> </i></a>
+				<a href="https://ca.linkedin.com/in/alexander-ivanov" class="nav-link"><i class="bi bi-linkedin h1"> </i></a>
+			</div>
   </div>
+		<!-- EXAMPLE CARD FINISH -->
+  </div>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>
