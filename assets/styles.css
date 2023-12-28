@@ -5,3 +5,9 @@
 	height: 200px;
 	visibility: hidden;
 }
+
+.gradient-text {
+	background: linear-gradient(90deg, rgb(0, 166, 255), #1b65fa);
+	-webkit-background-clip: text;
+	color: transparent;
+  }
