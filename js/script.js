@@ -197,3 +197,8 @@ function removeClickedFile(event) {
 	event.target.remove()
 	displaySelectedFiles();
 }
+
+// This function will scroll once files are done processing
+function handleProgressCompletion() {
+	document.querySelector('#downloaddata').scrollIntoView({behavior:'smooth'});
+}
