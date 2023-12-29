@@ -8,7 +8,7 @@ Seperate Function for building query GPT function.
  * @returns {Promise<string | string>} the JSON as a string
  */
 function parse_syllabus(syllabus) {
-	return queryGPT(buildPrompt(syllabus)).then(response_1 => {
+	return queryGPT(syllabus).then(response_1 => {
 		return getTextFromGPT(response_1);
 	}).catch(error => {
 		console.error('Error:', error);
@@ -17,54 +17,68 @@ function parse_syllabus(syllabus) {
 }
 
 // builds the prompt given the syllabus
-function buildPrompt(syllabus) {
-	return `I need you to create a JSON object containing specific information about a school course from the given syllabus. I want the JSON that you give me to match the exact formatting of the JSON object below. Do not add any fields.
-		If there are weekly assignments, include a different object for each week. If there is a weekly assignment due on Tuesdays for example, you can simply say "Tuesday Week 1" for the first assignment, "Tuesday Week 2" for the second assignment, up until the semester is over.
-		The time attribute is for the time that an assignment is due, or the time when an assesment starts (like a quiz, test, or exam)
+function buildSystemPrompt() {
+	return (
+`You are part of a syllabus parsing application; this app takes a syllabus from any class, and returns a calendar file so students can see upcoming assignments etc, and a spreadsheet so students can quickly calculate their grades.
+This should be able to work on any syllabus for any class.
 
+Your role is to create a JSON object containing specific information about the school course from the given syllabus. The JSON that output must match the formatting of the JSON object below. Do not modify the overall structure or add any fields to the parent object. Obviously, you must change the values to match the given syllabus.
+
+If there are weekly assignments, include a different object for each week. 
+If there is a weekly assignment due on Tuesdays for example, you can simply say "Tuesday Week 1" for the first assignment, "Tuesday Week 2" for the second assignment, up until the semester is over.
+
+For biweekly assignments, repeat the same process, but skip a week each time.
+
+The time attribute is for the time that an assignment is due, or the time when an assessment starts (like a quiz, test, or exam).
+		
+Here is format of the JSON you will output:
 """
 {
-  "subject": "Computer Science",
+  "subject": "COMP 101 Computer Science",
   "schedule": [
-    {
-      "title": "Algorithm Design Assignment",
-      "due_date": "2023-12-25",
-      "time": "14:00"
-    },
-    {
-      "title": "Programming Principles Quiz",
-      "due_date": "2024-01-05",
-      "time": "10:30"
-    },
-    {
-      "title": "Data Structures Test",
-      "due_date": "2024-01-15",
-      "time": "09:00"
-    },
-    {
-      "title": "Software Development Project Presentation",
-      "due_date": "2024-01-10",
-      "time": "13:45"
-    },
-    {
-      "title": "Analysis of Algorithms Essay",
-      "due_date": "2024-01-08",
-      "time": "11:15"
-    }
+	{
+	  "title": "Algorithm Design Assignment",
+	  "due_date": "2023-12-25",
+	  "time": "14:00"
+	},
+	{
+	  "title": "Programming Principles Quiz",
+	  "due_date": "2024-01-05",
+	  "time": "10:30"
+	},
+	{
+	  "title": "Data Structures Test",
+	  "due_date": "2024-01-15",
+	  "time": "09:00"
+	},
+	{
+	  "title": "Software Development Project Presentation",
+	  "due_date": "2024-01-10",
+	  "time": "13:45"
+	},
+	{
+	  "title": "Analysis of Algorithms Essay",
+	  "due_date": "2024-01-08",
+	  "time": "11:15"
+	}
   ],
   "marking_weights": {
-    "assignments": 30,
-    "quizzes": 20,
-    "tests": 50
+	"assignments": 30,
+	"quizzes": 20,
+	"tests": 50
   }
 }
-"""
+"""`
+)
+}
 
-Here is the course syllabus:
+function buildUserPrompt(syllabus) {
+	return (
+`Here is the syllabus for my course, please given me the corresponding JSON file:
 """
 ${syllabus}
-"""
-`
+"""`
+	)
 }
 
 /* deprecated - remove */
@@ -89,10 +103,13 @@ function do_stuff(s) {
  * @returns {Promise<string>} resolves to the generated response as JSON
  */
 
-async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
+async function queryGPT(syllabus, temp=.5, top_p=1, frequency_penalty=0, presence_penalty=0 ) {
 
 	const key = "LXNrS3JmV20wTFBpd1FvZm5LWThqVHV0bDNCRmJrUkpLVU9ITVAzb2RzQ3pCdHpQaWFG";
 	const endpoint = 'https://api.openai.com/v1/chat/completions';
+
+	const systemPrompt = buildSystemPrompt()
+	const userPrompt = buildUserPrompt(syllabus)
 
 	const data = {
 		model: 'gpt-3.5-turbo-1106',
@@ -105,7 +122,11 @@ async function queryGPT(prompt, temp=.5, top_p=1, frequency_penalty=0, presence_
 		messages: [
 			{
 				role:"system",
-				content:prompt
+				content:systemPrompt
+			},
+			{
+				role:"user",
+				content:userPrompt
 			}
 		]
 	};
