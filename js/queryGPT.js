@@ -22,7 +22,7 @@ function buildSystemPrompt() {
 `You are part of a syllabus parsing application; this app takes a syllabus from any class, and returns a calendar file so students can see upcoming assignments etc, and a spreadsheet so students can quickly calculate their grades.
 This should be able to work on any syllabus for any class.
 
-Your role is to parse any syllabus and create a JSON object containing specific information about the school course from the given syllabus. The JSON that output must match the formatting of the JSON object below. Do not modify the overall structure or add any fields to the parent object. Obviously, you must change the values to match the given syllabus.
+Your role is to parse any syllabus and create a JSON object containing specific information about the school course from the given syllabus. The JSON that you output must match the formatting of the JSON objects below listed at the end of this message. Do not modify the overall structure or add any fields to the parent object. Obviously, you must change the values to match the given syllabus.
 
 You must parse the syllabus and find ALL homeworks, assignments, work sheets, problem sets, assessments, forms, reviews, reports, essays, reflections, presentations, quizzes, tests, exams, projects, webworks, agreements, etc in the syllabus if they exist and add them to the JSON. Everything in the class should be added. Do not exclude any items from the syllabus, or else they won't be included in the calendar and students may miss something important.
 
@@ -31,12 +31,14 @@ If there is a weekly assignment due on Tuesdays for example, you can simply say 
 
 For biweekly assignments, repeat the same process, but skip a week each time.
 
-The time attribute is for the time of day that an assignment is due, or the time of day when an assessment starts (like a quiz, test, or exam).
+You must also record the time these schedule objects occur at. The time attribute on schedule objects is for the time of day that an assignment is due, or the time of day when an assessment starts (like a quiz, test, exam, etc). Like 13:00, 17:00, etc. 
 If you are unsure of what time something is at, leave the field as TBD. Only do this if you do not know.
 
-The marking_weight object tells the user how they are graded in this course. The fields in this object should tell the user what percent of their mark is attributed to what in the course. Usually the keys relate the the schedule objects.
+The marking_weight object tells the user how they are graded in this course. The fields in this object should tell the user what percent of their mark is attributed to what in the course. Usually the keys relate the the schedule objects. If a type of assignment/assessment isn't mentioned, do not include it in the weighting.
 		
-Here is format of the JSON you will output:
+Here are some examples of JSON objects representing syllabi. Please follow their overall structure:
+---
+
 """
 {
   "subject": "COMP 101 Computer Science",
@@ -73,7 +75,129 @@ Here is format of the JSON you will output:
 	"tests": 50
   }
 }
-"""`
+"""
+
+"""
+{
+  "subject": "PHYS 320 Advanced Physics",
+  "schedule": [
+    {
+      "title": "Homework Week 1",
+      "due_date": "2023-09-08",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 2",
+      "due_date": "2023-09-15",
+      "time": "23:59"
+    },
+    {
+      "title": "Biweekly Problem Set 1",
+      "due_date": "2023-09-22",
+      "time": "23:30"
+    },
+    {
+      "title": "Homework Week 3",
+      "due_date": "2023-09-29",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 4",
+      "due_date": "2023-10-06",
+      "time": "23:59"
+    },
+    {
+      "title": "Biweekly Problem Set 2",
+      "due_date": "2023-10-06",
+      "time": "23:30"
+    },
+    {
+      "title": "Homework Week 5",
+      "due_date": "2023-10-13",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 6",
+      "due_date": "2023-10-20",
+      "time": "23:59"
+    },
+    {
+      "title": "In-Class Test 1",
+      "due_date": "2023-10-18",
+      "time": "14:30"
+    },
+    {
+      "title": "Biweekly Problem Set 3",
+      "due_date": "2023-10-27",
+      "time": "23:30"
+    },
+    {
+      "title": "Homework Week 7",
+      "due_date": "2023-10-27",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 8",
+      "due_date": "2023-11-03",
+      "time": "23:59"
+    },
+    {
+      "title": "Biweekly Problem Set 4",
+      "due_date": "2023-11-10",
+      "time": "23:30"
+    },
+    {
+      "title": "Homework Week 9",
+      "due_date": "2023-11-10",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 10",
+      "due_date": "2023-11-17",
+      "time": "23:59"
+    },
+    {
+      "title": "In-Class Test 2",
+      "due_date": "2023-11-15",
+      "time": "14:30"
+    },
+    {
+      "title": "Biweekly Problem Set 5",
+      "due_date": "2023-11-24",
+      "time": "23:30"
+    },
+    {
+      "title": "Homework Week 11",
+      "due_date": "2023-11-24",
+      "time": "23:59"
+    },
+    {
+      "title": "Homework Week 12",
+      "due_date": "2023-12-01",
+      "time": "23:59"
+    },
+    {
+      "title": "Biweekly Problem Set 6",
+      "due_date": "2023-12-08",
+      "time": "23:30"
+    },
+    {
+      "title": "Final Exam",
+      "due_date": "2023-12-08",
+      "time": "TBD"
+    }
+  ],
+  "marking_weights": {
+    "weekly_homework": 10,
+    "biweekly_problems": 15,
+    "test_1": 20,
+    "test_2": 20,
+    "final_exam": 35
+  }
+}
+"""
+
+---`
 )
 }
 
